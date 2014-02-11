@@ -1,0 +1,34 @@
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+#wrap {
+	margin: 60px auto 0;
+	width: 90%;
+}
+
+section .headline,
+section .image,
+section .description {
+	border: solid 1px #ccc;
+	border-radius: 3px;
+	margin: 5px 0;
+	padding: 1%;
+	text-align: center;
+	width: 100%;
+}
+
+#new {
+	background :#e5e5e5;
+	border: solid 1px #ccc;
+	border-radius: 3px;
+	display: block;
+	padding: 2%;
+	width: 100%;
+}
+
+.image img {
+	max-width: 100%;
+}
