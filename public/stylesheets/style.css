@@ -5,19 +5,73 @@
 }
 
 #wrap {
+	font-family: 'Open Sans';
 	margin: 60px auto 0;
 	width: 90%;
 }
+#save {
+	background: #000;
+	border: 0;
+	border-radius: 0 0 5px 0;
+	color: #fff;
+	font-weight: 800;
+	left: 0;
+	padding: 5px 8px;
+	outline: none;
+	position: fixed;
+	top: 0;
+}
 
+section {
+	margin: 40px 0;
+}
+
+.saved .headline,
+.saved .image,
+.saved .description,
+.saved .identifiers {
+	border: 0;
+	border-radius: none;
+}
 section .headline,
 section .image,
-section .description {
+section .description,
+section .identifiers {
 	border: solid 1px #ccc;
 	border-radius: 3px;
+	display: block;	
 	margin: 5px 0;
 	padding: 1%;
 	text-align: center;
 	width: 100%;
+}
+section .identifiers {
+	margin-left: 80%;
+	width: 20%;
+}
+
+section .headline.done,
+section .image.done,
+section .description.done {
+	border: 0;
+	border-radius: none;
+	margin: 5px 0;
+	padding: 0;
+	text-align: left;
+}
+
+
+section .headline.done,
+section .image.done {
+	text-align: center;
+}
+
+.headline {
+	font-weight: 800;
+}
+.image,
+.description {
+	font-weight: 500;
 }
 
 #new {
@@ -25,8 +79,11 @@ section .description {
 	border: solid 1px #ccc;
 	border-radius: 3px;
 	display: block;
+	font-weight: 800;
+	margin: 40px auto 0;
+	outline: none;
 	padding: 2%;
-	width: 100%;
+	width: 60%;
 }
 
 .image img {
