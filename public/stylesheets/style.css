@@ -69,9 +69,11 @@ section .image.done {
 .headline {
 	font-weight: 800;
 }
-.image,
-.description {
+.image {
 	font-weight: 500;
+}
+.description {
+	font-weight: 700;
 }
 
 #new {

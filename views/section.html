@@ -1,6 +1,23 @@
-<section id="{{ item.ids }}" class="saved {{ item.classes }}">
-	<b class="identifiers" contenteditable>{{ item.identifiers }}</b>
-	<h1 class="headline" contenteditable>{{ item.headline }}</h1>
-	<div class="image" contenteditable><img src="{{ item.media }}"></div>
-	<p class="description" contenteditable>{{ item.description }}</p>
+<section id="" class="" ng-repeat="section in sections">
+	
+	<b class="identifiers" contenteditable ng-focus="startText($event)" ng-blur="endText($event)">
+		{{ item.identifiers }}
+	</b>
+
+	<h1 class="headline" contenteditable ng-focus="startText($event)" ng-blur="endText($event)">
+		{{ item.headline }}
+	</h1>
+
+	<div class="image" contenteditable ng-focus="startText($event)" ng-blur="endText($event)">
+		{% if item.media.match('.jpg') %}
+			<img src="{{ item.media }}">
+		{% else %}
+			{{ item.media }}
+		{% endif %}
+	</div>
+
+	<p class="description" contenteditable ng-focus="startText($event)" ng-blur="endText($event)">
+		{{ item.description }}
+	</p>
+
 </section>

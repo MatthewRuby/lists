@@ -1,0 +1,22 @@
+[
+    {
+        "identifiers": "Identifiers",
+        "headline": "Headline",
+        "description": "Description",
+        "media": {
+            "placeholder": "Media"
+        }
+    },
+    {
+        "identifiers": "Identifiers",
+        "headline": "Headline",
+        "description": "Description",
+        "media": "Media"
+    },
+    {
+        "identifiers": "Identifiers",
+        "headline": "Headline",
+        "description": "Description",
+        "media": "Media"
+    }
+]

@@ -3,12 +3,42 @@
 {% block title %} - Home{% endblock %}
 
 {% block content %}
-	<main id="main">
-<!-- 	{% for item in collection %}
-		{% include "./section.html" item %}
-	{% endfor %} -->
+	<main id="main" >
+
+		{% if collection %}
+
+			{% for item in collection %}
+				{% include "./section.html" item %}
+			{% endfor %}
+
+		{% else %}
+
+			{% raw %}
+			<section id="" class="" ng-repeat="section in sections">
+				
+				<b class="identifiers" contenteditable ng-focus="startText($event)" ng-blur="endText($event)">
+					{{ section.identifiers }}
+				</b>
+
+				<h1 class="headline" contenteditable ng-focus="startText($event)" ng-blur="endText($event)">
+					{{ section.headline }}
+				</h1>
+
+				<div class="image" contenteditable ng-focus="startText($event)" ng-blur="endText($event)">
+					{{ section.media.placeholder }}
+				</div>
+
+				<p class="description" contenteditable ng-focus="startText($event)" ng-blur="endText($event)">
+					{{ section.description }}
+				</p>
+
+			</section>
+			{% endraw %}
+
+		{% endif %}
+
 	</main>
-	<button id="new">new section</button>
+	<button id="new" ng-click="newSection()">new section</button>
 {% endblock %}
 
 
