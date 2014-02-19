@@ -8,8 +8,8 @@ exports.index = function(req, res){
 		name = req.path.replace('/', ''),
 		data;
 
-	if(fs.existsSync("./" + name + ".json")) {
-		data = JSON.parse( fs.readFileSync("./" + name + ".json", "utf-8") );
+	if(fs.existsSync("./public/feeds/" + name + ".json")) {
+		data = JSON.parse( fs.readFileSync("./public/feeds/" + name + ".json", "utf-8") );
 	} else {
 		data = {};
 	}
@@ -42,15 +42,15 @@ exports.save = function(req, res){
 	var fs = require('fs'),
 		myData = req.body.list,
 		name  = req.body.name,
-		outputFilename = name + '.json';
+		outputFilename = './public/feeds/' + name + '.json';
 
 	fs.writeFile(outputFilename, JSON.stringify(myData, null, 4), function(err) {
 	    if(err) {
 	      console.log(err);
 	    } else {
-	      console.log("JSON saved to ");
+	      console.log("JSON saved");
 	    }
 	});
 
-	res.send({"success" : "success"});
+	res.send({"success" : outputFilename});
 };

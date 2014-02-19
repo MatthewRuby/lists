@@ -5,11 +5,7 @@
   <title>Essay {% block title %}{% endblock %}</title>
   <link rel="stylesheet" type="text/css" href="stylesheets/fonts.css">
   <link rel="stylesheet" type="text/css" href="stylesheets/lib/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
-<!--   // <script data-main="javascripts/main" src="javascripts/lib/require.js"></script> -->
-	<script type="text/javascript" src="javascripts/lib/jquery.js"></script>
-	<script type="text/javascript" src="javascripts/lib/underscore-min.js"></script>
-	<script type="text/javascript" src="javascripts/lib/backbone-min.js"></script>
+  <link rel="stylesheet" type="text/css" href="stylesheets/style.css">	
 </head>
 <body>
 <div id="wrap">
@@ -17,99 +13,24 @@
 	{% block content %}{% endblock %}
 </div>
 
+
+
+<script type="text/javascript" src="javascripts/lib/jquery.js"></script>
+<script type="text/javascript" src="javascripts/lib/underscore-min.js"></script>
+<script type="text/javascript" src="javascripts/lib/backbone-min.js"></script>
+
+
 <script type="text/template" id="section_template">
-	<b class="identifiers" contenteditable>Identifiers</b>
-	<h1 class="headline" contenteditable>Headline</h1>
-	<div class="image" contenteditable>Image</div>
-	<p class="description" contenteditable>Description</p>
-
+	<section class="<%= meta %>">
+		<b class="meta" contenteditable><%= meta %></b>
+		<h1 class="headline" contenteditable><%= headline %></h1>
+		<div class="media" contenteditable><%= media %></div>
+		<p class="description" contenteditable><%= description %></p>
+	</section>
 </script>
 
-<script type="text/javascript">
 
-	var main = document.getElementById('main');
-
-    SectionView = Backbone.View.extend({
-        initialize: function(){
-            this.render();
-        },
-        render: function(){
-            var template = _.template( $("#section_template").html(), {} );
-            $(this.el).html( template );
-        },
-        events: {
-        	"focus .headline, .image, .description, .identifiers" : "startText",
-        	"blur .headline, .image, .description, identifiers" : "blurText"
-        },
-        startText: function(e){
-        	e.target.innerHTML = '';
-        },
-       	blurText: function(e){
-
-       		if( e.target.innerText === '' ) {
-       			e.target.innerText = $(e.target).attr('class');
-       		} else {
-       			$(e.target).addClass('done')
-       			if( $(e.target).hasClass('image') ) {
-       				this.displayImage(e);
-       			}
-       		}
-
-        },
-        displayImage: function(e){
-            e.target.innerHTML = '<img src="' + e.target.innerText + '">';
-        }
-    });
-
-    Button = Backbone.View.extend({
-    	el: $('#new'),
-    	events: {
-            "click" : "newSection"
-        },
-        newSection: function(){
-        	var sect = document.createElement('section');
-        	var section_view = new SectionView({ el: sect });
-        	main.appendChild(sect)
-        }
-    });
-    var button = new Button({ el : $("#new") });
-
-
-    
-    
-
-    $('#save').on('click', function(){
-
-    	var sections = $('#main section'),
-    		arr = [];
-    	for(var i = 0, end = sections.length; i < end; i++) {
-    		var m = {
-		    	identifiers : $(sections[i]).find('.identifiers').text(),
-		    	headline : $(sections[i]).find('.headline').html(),
-		    	description : $(sections[i]).find('.description').html(),
-		    	media : $(sections[i]).find('.image img').attr('src')
-		    };
-		    arr.push(m);
-    	}
-
-    	console.log(window.location)
-
-    	var name = window.location.pathname.replace('/', '')
-
-    	$.ajax({
-    		type : "POST",
-    		url : '/save',
-    		data : { 
-    			"name" : name,
-    			"list" : arr
-    		},
-    		success : function(data){
-    			console.log( data );
-    		}
-    	})
-	});
-   
-</script>
+<script type="text/javascript" src="javascripts/main.js"></script>
 
 </body>
 </html>

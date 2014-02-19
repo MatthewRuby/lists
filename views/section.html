@@ -1,6 +1,6 @@
 <section id="{{ item.ids }}" class="saved {{ item.classes }}">
-	<b class="identifiers" contenteditable>{{ item.identifiers }}</b>
-	<h1 class="headline" contenteditable>{{ item.headline }}</h1>
-	<div class="image" contenteditable><img src="{{ item.media }}"></div>
-	<p class="description" contenteditable>{{ item.description }}</p>
+	<b class="meta" contenteditable>{{ item.meta }}</b>
+	<h1 class="headline" contenteditable>{% autoescape false %}{{ item.headline }}{% endautoescape %}</h1>
+	<div class="media" contenteditable>{% autoescape false %}<img src="{{ item.media }}"{% endautoescape %}></div>
+	<p class="description" contenteditable>{% autoescape false %}{{ item.description }}{% endautoescape %}</p>
 </section>

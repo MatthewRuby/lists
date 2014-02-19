@@ -27,16 +27,23 @@ section {
 }
 
 .saved .headline,
-.saved .image,
+.saved .media,
 .saved .description,
-.saved .identifiers {
-	border: 0;
+.saved .meta {
+	border: solid 1px transparent;
 	border-radius: none;
 }
+.saved:hover .headline,
+.saved:hover .media,
+.saved:hover .description,
+.saved:hover .meta {
+	border: solid 1px #ccc;
+	border-radius: 3px;
+}
 section .headline,
-section .image,
+section .media,
 section .description,
-section .identifiers {
+section .meta {
 	border: solid 1px #ccc;
 	border-radius: 3px;
 	display: block;	
@@ -44,14 +51,15 @@ section .identifiers {
 	padding: 1%;
 	text-align: center;
 	width: 100%;
+	transition: border 0.5s;
 }
-section .identifiers {
+section .meta {
 	margin-left: 80%;
 	width: 20%;
 }
 
 section .headline.done,
-section .image.done,
+section .media.done,
 section .description.done {
 	border: 0;
 	border-radius: none;
@@ -62,14 +70,14 @@ section .description.done {
 
 
 section .headline.done,
-section .image.done {
+section .media.done {
 	text-align: center;
 }
 
 .headline {
 	font-weight: 800;
 }
-.image,
+.media,
 .description {
 	font-weight: 500;
 }
@@ -86,6 +94,6 @@ section .image.done {
 	width: 60%;
 }
 
-.image img {
+.media img {
 	max-width: 100%;
 }
