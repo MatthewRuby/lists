@@ -10,28 +10,11 @@ exports.index = function(req, res){
 
 	if(fs.existsSync("./public/feeds/" + name + ".json")) {
 		data = JSON.parse( fs.readFileSync("./public/feeds/" + name + ".json", "utf-8") );
-	} else {
-		data = {};
 	}
 	if(data) {
-
-		console.log( data )
-
 		res.render('article', { "collection" : data	} );
-
 	} else {
-
-		res.render('index', { "collection" : [
-
-				{
-					head : "headline",
-					image  : "image",
-					desc : "description"
-				}
-				
-			]	
-		});
-
+		res.render('article', {} );
 	}
 
 	
@@ -43,6 +26,8 @@ exports.save = function(req, res){
 		myData = req.body.list,
 		name  = req.body.name,
 		outputFilename = './public/feeds/' + name + '.json';
+
+	console.log(myData)
 
 	fs.writeFile(outputFilename, JSON.stringify(myData, null, 4), function(err) {
 	    if(err) {

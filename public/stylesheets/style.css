@@ -6,8 +6,8 @@
 
 #wrap {
 	font-family: 'Open Sans';
-	margin: 60px auto 0;
-	width: 90%;
+	margin: 0 auto;
+	width: 100%;
 }
 #save {
 	background: #000;
@@ -23,7 +23,7 @@
 }
 
 section {
-	margin: 40px 0;
+	padding: 40px 2%;
 }
 
 .saved .headline,
@@ -33,12 +33,16 @@ section {
 	border: solid 1px transparent;
 	border-radius: none;
 }
-.saved:hover .headline,
-.saved:hover .media,
-.saved:hover .description,
-.saved:hover .meta {
+.saved .meta {
+	opacity: 0;
+}
+.saved .headline:hover ,
+.saved .media:hover ,
+.saved .description:hover ,
+.saved .meta:hover  {
 	border: solid 1px #ccc;
 	border-radius: 3px;
+	opacity: 1;
 }
 section .headline,
 section .media,
@@ -51,27 +55,16 @@ section .meta {
 	padding: 1%;
 	text-align: center;
 	width: 100%;
-	transition: border 0.5s;
+	transition: all 0.5s;
 }
 section .meta {
-	margin-left: 80%;
-	width: 20%;
+	margin-left: 50%;
+	width: 50%;
 }
 
-section .headline.done,
-section .media.done,
-section .description.done {
-	border: 0;
-	border-radius: none;
-	margin: 5px 0;
-	padding: 0;
+
+section.saved .description {
 	text-align: left;
-}
-
-
-section .headline.done,
-section .media.done {
-	text-align: center;
 }
 
 .headline {
@@ -96,4 +89,18 @@ section .media.done {
 
 .media img {
 	max-width: 100%;
+}
+
+section {
+	background: #fff;
+}
+section[data-fixed] {
+	background: transparent;
+	height: 600px;
+	width: 100%;
+}
+section[data-fixed] .media {
+	position: fixed;
+	top: 0;
+	z-index: -1;
 }

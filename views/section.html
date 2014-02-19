@@ -1,4 +1,4 @@
-<section id="{{ item.ids }}" class="saved {{ item.classes }}">
+<section {{ item.meta }}>
 	<b class="meta" contenteditable>{{ item.meta }}</b>
 	<h1 class="headline" contenteditable>{% autoescape false %}{{ item.headline }}{% endautoescape %}</h1>
 	<div class="media" contenteditable>{% autoescape false %}<img src="{{ item.media }}"{% endautoescape %}></div>
