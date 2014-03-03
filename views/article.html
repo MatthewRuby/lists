@@ -2,13 +2,26 @@
 
 {% block title %} - Home{% endblock %}
 
+{% block style %}
+<style type="text/css" id="custom-stylesheet">
+	{% autoescape false %}{{ decodeURIComponent( styles ) }}{% endautoescape %}
+</style>
+{% endblock %}
+
 {% block content %}
+	<div id="info">
+		<button id="info-toggle">i</button>
+		<button id="save">Save</button>
+		<button id="new">new section</button>
+		<textarea id="custom-styles">{% autoescape false %}{{ decodeURIComponent( styles ) }}{% endautoescape %}</textarea>
+	</div>
+	
 	<main id="main">
 	{% for item in collection %}
 		{% include "./section.html" item %}
 	{% endfor %}
 	</main>
-	<button id="new">new section</button>
+	
 {% endblock %}
 
 

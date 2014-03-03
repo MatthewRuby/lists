@@ -6,10 +6,10 @@
   <link rel="stylesheet" type="text/css" href="stylesheets/fonts.css">
   <link rel="stylesheet" type="text/css" href="stylesheets/lib/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="stylesheets/style.css">	
+  {% block style %}{% endblock %}
 </head>
 <body>
 <div id="wrap">
-	<button id="save">Save</button>
 	{% block content %}{% endblock %}
 </div>
 
@@ -22,10 +22,10 @@
 
 <script type="text/template" id="section_template">
 	<section class="<%= meta %>">
-		<b class="meta" contenteditable><%= meta %></b>
 		<h1 class="headline" contenteditable><%= headline %></h1>
 		<div class="media" contenteditable><%= media %></div>
 		<p class="description" contenteditable><%= description %></p>
+		<b class="meta" contenteditable><%= meta %></b>
 	</section>
 </script>
 

@@ -3,12 +3,20 @@
 {% block title %} - Home{% endblock %}
 
 {% block content %}
-	<main id="main">
-<!-- 	{% for item in collection %}
-		{% include "./section.html" item %}
-	{% endfor %} -->
+	<main id="main" class="index">
+		<ul>	
+		{% for item in collection %}
+			<li data-length="{{ item.data.length }}" data-name="{{ item.name }}">
+				<a href="/{{ item.name }}">
+					<h1 class="headline">{% autoescape false %}{{ item.data[0].headline }}{% endautoescape %}</h1>
+					<div class="media">{% autoescape false %}<img src="{{ item.data[0].media }}"{% endautoescape %}></div>
+					<p class="description">{% autoescape false %}{{ item.data[0].description }}{% endautoescape %}</p>
+					<b class="numSlides">{{ item.data.length }} Slide{% if item.data.length > 1 %}s{% endif %}</b>
+				</a>
+			</li>
+		{% endfor %}
+		</ul>
 	</main>
-	<button id="new">new section</button>
 {% endblock %}
 
 
