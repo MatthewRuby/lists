@@ -4,7 +4,6 @@
   <meta charset="utf-8">
   <title>Essay {% block title %}{% endblock %}</title>
   <link rel="stylesheet" type="text/css" href="stylesheets/fonts.css">
-  <link rel="stylesheet" type="text/css" href="stylesheets/lib/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="stylesheets/style.css">	
   {% block style %}{% endblock %}
 </head>
@@ -13,22 +12,19 @@
 	{% block content %}{% endblock %}
 </div>
 
-
-
 <script type="text/javascript" src="javascripts/lib/jquery.js"></script>
 <script type="text/javascript" src="javascripts/lib/underscore-min.js"></script>
 <script type="text/javascript" src="javascripts/lib/backbone-min.js"></script>
-
-
+<script type="text/javascript" src="javascripts/lib/swipe.js"></script>
 <script type="text/template" id="section_template">
-	<section class="<%= meta %>">
-		<h1 class="headline" contenteditable><%= headline %></h1>
-		<div class="media" contenteditable><%= media %></div>
-		<p class="description" contenteditable><%= description %></p>
-		<b class="meta" contenteditable><%= meta %></b>
+	<section class="new">
+		<h1 class="headline new" data-placeholder="<%= headline %>" contenteditable><%= headline %></h1>
+		<div class="media new" data-placeholder="<%= media %>" contenteditable><%= media %>Draw</div>
+		<button class="draw">draw</button>
+		<p class="description new" data-placeholder="<%= description %>" contenteditable><%= description %></p>
+		<b class="meta new" data-placeholder="<%= meta %>" contenteditable><%= meta %></b>
 	</section>
 </script>
-
 
 <script type="text/javascript" src="javascripts/main.js"></script>
 

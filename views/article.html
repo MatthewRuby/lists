@@ -12,38 +12,68 @@
 	<div id="info">
 		<button id="info-toggle">i</button>
 		<button id="save">Save</button>
-		<button id="new">new section</button>
 		<textarea id="custom-styles"></textarea>
 	</div>
 	
-	<main id="main" style="width: {{ Entries.length * 800 }}px">
+	<main id="main">
 		<div id='slider' class='swipe'>
   		<div class='swipe-wrap'>
 
 			{% for entry in Entries %}
+				
+				{% if loop.last %}
+					{% set latest = true %}
+				{% endif %}
 
-					<div id="{% if loop.last %}latest{% endif %}" class="version" data-version="{{ entry.Version }}">
+				<div id="{% if latest == true %}latest{% endif %}" class="version" data-version="{{ entry.Version }}">
 
-						{% for item in entry.items %}
+					{% for item in entry.items %}
 
-							<section id="{{ item.meta.ids }}" class="saved {{ item.meta.classes }}" {{ item.meta.attrs }}>
+	
+
+						<section id="{{ item.meta.ids }}" class="saved {{ item.meta.classes }}" {{ item.meta.attrs }}>
+
+							{% if item.headline %}
 								<h1 class="headline">{% autoescape false %}{{ item.headline }}{% endautoescape %}</h1>
-								<div class="media">{% autoescape false %}<img {% if loop.last %}data-{% endif %}src="{{ item.media }}"{% endautoescape %}></div>
+							{% elseif latest == true %}
+								<h1 class="headline new" data-placeholder="Headline" contenteditable>Headline</h1>
+							{% endif %}
+
+							{% if item.media %}
+								<div class="media"><img src="{{ item.media }}"></div>
+							{% elseif latest == true %}
+								<div class="media new" data-placeholder="Media" contenteditable>Media</div>
+							{% endif %}
+
+							{% if description in item %}
 								<p class="description">{% autoescape false %}{{ item.description }}{% endautoescape %}</p>
+							{% elseif latest == true %}
+								<p class="description new" data-placeholder="Description" contenteditable>Description</p>
+							{% endif %}
+
+							{% if meta in item %}
 								<b class="meta">{{ item.meta.raw }}</b>
-							</section>
+							{% elseif latest == true %}
+								<b class="meta new" data-placeholder="meta-data" contenteditable>meta-data</b>
+							{% endif %}
+		
+						</section>
 
 						{% endfor %}
+
+						{% if latest == true %}<button id="new">new item</button>{% endif %}
 
 					</div>
 
 			{% endfor %}
-			
+
 			</div>
 		</div>
+		<button id="prev">prev</button>
+		<button id="next">next</button>
 	</main>
 
-	<div id="mask"></div>
+
 	
 {% endblock %}
 

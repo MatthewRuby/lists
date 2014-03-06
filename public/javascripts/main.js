@@ -13,8 +13,6 @@ var SectionModel = Backbone.Model.extend({
 
 SectionView = Backbone.View.extend({
     initialize: function(model){
-        console.log(this.$el)
-        this.$el.find('.meta, .headline, .media, .description').attr('contenteditable', 'true');
     },
     events: {
         "focus [contenteditable]" : "startEdit",
@@ -22,14 +20,25 @@ SectionView = Backbone.View.extend({
     },
     render: function(){
         var template = _.template( $("#section_template").html(), this.model.toJSON() );
-        this.$el.append( template );
+        $( template ).insertBefore('#new');
+        setTimeout(function(){
+            $('section.new').removeClass('new');
+        }, 250);
     },
     startEdit: function(e){
-      console.log('startEdit')
-      e.target.innerText = e.target.innerHTML;
+        console.log('startEdit')
+        $(e.target).removeClass('new');
+        if($(e.target).attr('data-placeholder') === e.target.innerText) {
+            e.target.innerText = '';
+        } else {
+            e.target.innerText = e.target.innerHTML;
+        } 
     },
     endEdit: function(e){
       console.log('endEdit')
+
+      if($(e.target).attr('data-placeholder') === e.target.innerText || e.target.innerText === '') $(e.target).addClass('new')
+
       var obj = {};
         obj[e.target.className] = e.target.innerText;
       this.model.set(obj);
@@ -76,26 +85,36 @@ var NewSection = Backbone.View.extend({
     newSection: function(){
         var section = new SectionView({ el : $('#latest'), model : new SectionModel });
         section.render();
+
     }
 });
 
 
-var sections = $('section'),
+var sections = $('#latest section'),
     list = [];
 for(var i = 0, end = sections.length; i < end; i++){
     list.push( new SectionView({ el : $(sections[i]), model : new SectionModel }) );
 }
 
 if($('#latest').length < 1){
-    $('#main').append('<div id="latest" class="version" data-version="0"></div>');
+    $('.swipe-wrap').append('<div id="latest" class="version" data-version="0"><button id="new">new item</button></div>');
 }
 
+$('#latest').find('.meta, .headline, .media, .description').attr('contenteditable', 'true');
 
 var page = new SectionList();
 
 var newSect = new NewSection({ el : $("#new") });
 
 
+
+function saveFilter(el){
+    var value = false;
+    if( $(el).html() !== $(el).attr('data-placeholder') ) {
+        value = $(el).html();
+    }
+    return value
+}
 
 
 var Save = Backbone.View.extend({
@@ -109,20 +128,34 @@ var Save = Backbone.View.extend({
             name = window.location.pathname.replace('/', ''),
             styles = $('#custom-styles').val();
 
+        $('#latest').attr('data-version', parseInt($('#latest').attr('data-version')) + 1)
+
         for(var i = 0, end = sections.length; i < end; i++) {
-            var m = {
-                meta : $(sections[i]).find('.meta').text(),
-                headline : $(sections[i]).find('.headline').html(),
-                description : $(sections[i]).find('.description').html(),
-                media : $(sections[i]).find('.media img').attr('src')
-            };
+
+            var m = {},
+                meta = saveFilter( $(sections[i]).find('.meta') ),
+                headline  = saveFilter( $(sections[i]).find('.headline') ),
+                description  = saveFilter( $(sections[i]).find('.description') );
+            if(meta) {
+                m.meta = meta;
+            }
+            if(headline) {
+                m.headline = headline;
+            }
+            if(description) {
+                m.description = description;
+            }
+            if( $(sections[i]).find('.media img') ){
+                m.media = $(sections[i]).find('.media img').attr('src')                
+            }
+
             items.push(m);
         }
 
         var data = { 
             name : name,
             entry : {
-                "Version" : parseInt($('#latest').attr('data-version')) === 0 ? 0 : parseInt($('#latest').attr('data-version')) + 1,
+                "Version" : parseInt($('#latest').attr('data-version')),
                 "styles" : encodeURIComponent(styles),
                 "items" : items
             }
@@ -135,8 +168,6 @@ var Save = Backbone.View.extend({
             url : '/archive',
             data : data,
             success : function(data){
-                console.log( data );
-
                 $('body').addClass('beginSave');
                 setTimeout(function(){
                     $('body').removeClass('beginSave');
@@ -180,23 +211,24 @@ function addTabFormat(e){
 
 
 
-var begin = ( ($('.version').length * 800) - $(window).width() ) + ($(window).width()-800);
-setTimeout(function(){
-    window.scrollTo( begin, 0);
-}, 100);
-$('#mask').css('width', ($(window).width()-800) + 'px');
-$('#main').css('margin-left', ($(window).width()-800) + 'px');
-$(window).on('resize', function(){
-    $('#mask').css('width', ($(window).width()-800) + 'px');
+
+window.mySwipe = Swipe(document.getElementById('slider'), {
+  startSlide: $('.version').length - 1,
+  speed: 400,
+  continuous: false,
+  disableScroll: false,
+  stopPropagation: false,
+  callback: function(index, elem) {
+    console.log('callback')
+  },
+  transitionEnd: function(index, elem) {
+
+  }
 });
 
-
-
-window.mySwipe = Swipe(document.getElementById('slider'));
-
-/*
-app
-    setup static 
-    insert new
-    save updates
-*/
+$('#prev').on('click', function(){
+    window.mySwipe.prev();
+});
+$('#next').on('click', function(){
+    window.mySwipe.next();
+});

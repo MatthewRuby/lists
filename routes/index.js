@@ -39,6 +39,7 @@ exports.named = function(req, res){
 			res.render('article', {
 				Entries : data.Entries
 			});
+			
 		    db.close();
     	});
 
@@ -56,7 +57,7 @@ exports.archive = function(req, res){
 	for (var i = entry.items.length - 1; i >= 0; i--) {
 		var item = entry.items[i];
 			metaRaw = item.meta;
-			metaList = item.meta.replace(' ', '').split(','),
+			metaList = item.meta ? item.meta.replace(' ', '').split(',') : '',
 			ids = [],
 			classes = [],
 			attrs = [];
