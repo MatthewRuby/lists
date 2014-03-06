@@ -5,13 +5,12 @@
 {% block content %}
 	<main id="main" class="index">
 		<ul>	
-		{% for item in collection %}
-			<li data-length="{{ item.data.length }}" data-name="{{ item.name }}">
-				<a href="/{{ item.name }}">
-					<h1 class="headline">{% autoescape false %}{{ item.data[0].headline }}{% endautoescape %}</h1>
-					<div class="media">{% autoescape false %}<img src="{{ item.data[0].media }}"{% endautoescape %}></div>
-					<p class="description">{% autoescape false %}{{ item.data[0].description }}{% endautoescape %}</p>
-					<b class="numSlides">{{ item.data.length }} Slide{% if item.data.length > 1 %}s{% endif %}</b>
+		{% for article in collection %}
+			<li>
+				<a href="/{{ name }}">
+					<h1 class="headline">{% autoescape false %}{{ article.Entries[0].items[0].headline }}{% endautoescape %}</h1>
+					<div class="media">{% autoescape false %}<img src="{{ article.Entries[0].items[0].media }}"{% endautoescape %}></div>
+					<p class="description">{% autoescape false %}{{ article.Entries[0].items[0].description }}{% endautoescape %}</p>
 				</a>
 			</li>
 		{% endfor %}

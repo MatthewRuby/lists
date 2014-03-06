@@ -4,7 +4,7 @@
 
 {% block style %}
 <style type="text/css" id="custom-stylesheet">
-	{% autoescape false %}{{ decodeURIComponent( styles ) }}{% endautoescape %}
+
 </style>
 {% endblock %}
 
@@ -13,14 +13,37 @@
 		<button id="info-toggle">i</button>
 		<button id="save">Save</button>
 		<button id="new">new section</button>
-		<textarea id="custom-styles">{% autoescape false %}{{ decodeURIComponent( styles ) }}{% endautoescape %}</textarea>
+		<textarea id="custom-styles"></textarea>
 	</div>
 	
-	<main id="main">
-	{% for item in collection %}
-		{% include "./section.html" item %}
-	{% endfor %}
+	<main id="main" style="width: {{ Entries.length * 800 }}px">
+		<div id='slider' class='swipe'>
+  		<div class='swipe-wrap'>
+
+			{% for entry in Entries %}
+
+					<div id="{% if loop.last %}latest{% endif %}" class="version" data-version="{{ entry.Version }}">
+
+						{% for item in entry.items %}
+
+							<section id="{{ item.meta.ids }}" class="saved {{ item.meta.classes }}" {{ item.meta.attrs }}>
+								<h1 class="headline">{% autoescape false %}{{ item.headline }}{% endautoescape %}</h1>
+								<div class="media">{% autoescape false %}<img {% if loop.last %}data-{% endif %}src="{{ item.media }}"{% endautoescape %}></div>
+								<p class="description">{% autoescape false %}{{ item.description }}{% endautoescape %}</p>
+								<b class="meta">{{ item.meta.raw }}</b>
+							</section>
+
+						{% endfor %}
+
+					</div>
+
+			{% endfor %}
+			
+			</div>
+		</div>
 	</main>
+
+	<div id="mask"></div>
 	
 {% endblock %}
 

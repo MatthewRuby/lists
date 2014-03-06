@@ -74,7 +74,7 @@ var NewSection = Backbone.View.extend({
         "click" : "newSection"
     },
     newSection: function(){
-        var section = new SectionView({ el : $('#main'), model : new SectionModel });
+        var section = new SectionView({ el : $('#latest'), model : new SectionModel });
         section.render();
     }
 });
@@ -86,10 +86,12 @@ for(var i = 0, end = sections.length; i < end; i++){
     list.push( new SectionView({ el : $(sections[i]), model : new SectionModel }) );
 }
 
+if($('#latest').length < 1){
+    $('#main').append('<div id="latest" class="version" data-version="0"></div>');
+}
+
 
 var page = new SectionList();
-
-
 
 var newSect = new NewSection({ el : $("#new") });
 
@@ -102,8 +104,8 @@ var Save = Backbone.View.extend({
     },
     saveData: function(){
 
-        var sections = $('#main section'),
-            arr = [],
+        var sections = $('#latest section'),
+            items = [],
             name = window.location.pathname.replace('/', ''),
             styles = $('#custom-styles').val();
 
@@ -114,17 +116,24 @@ var Save = Backbone.View.extend({
                 description : $(sections[i]).find('.description').html(),
                 media : $(sections[i]).find('.media img').attr('src')
             };
-            arr.push(m);
+            items.push(m);
         }
+
+        var data = { 
+            name : name,
+            entry : {
+                "Version" : parseInt($('#latest').attr('data-version')) === 0 ? 0 : parseInt($('#latest').attr('data-version')) + 1,
+                "styles" : encodeURIComponent(styles),
+                "items" : items
+            }
+        }
+
+        console.log(data)
 
         $.ajax({
             type : "POST",
             url : '/archive',
-            data : { 
-                "name" : name,
-                "list" : arr,
-                "styles" : encodeURIComponent(styles)
-            },
+            data : data,
             success : function(data){
                 console.log( data );
 
@@ -170,6 +179,20 @@ function addTabFormat(e){
 }
 
 
+
+var begin = ( ($('.version').length * 800) - $(window).width() ) + ($(window).width()-800);
+setTimeout(function(){
+    window.scrollTo( begin, 0);
+}, 100);
+$('#mask').css('width', ($(window).width()-800) + 'px');
+$('#main').css('margin-left', ($(window).width()-800) + 'px');
+$(window).on('resize', function(){
+    $('#mask').css('width', ($(window).width()-800) + 'px');
+});
+
+
+
+window.mySwipe = Swipe(document.getElementById('slider'));
 
 /*
 app
