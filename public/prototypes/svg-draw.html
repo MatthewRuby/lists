@@ -1,0 +1,43 @@
+<html>
+<head>
+<title>SVG Prototype</title>
+<style type="text/css">
+	* {
+		margin: 0;
+		padding: 0;
+	}
+	#wrap {
+
+		height: 100%;
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
+	}
+	#paper {
+		background: #00f5f5;
+		height: 100%;
+		width: 100%;
+	}
+</style>
+</head>
+<body>
+
+	<div id="wrap">
+		<svg id="paper" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink"http://www.w3.org/1999/xlink" attributeType="XML">
+		</svg>
+	</div>
+
+<script type="text/javascript" src="../javascripts/lib/jquery.js"></script>
+<script type="text/javascript" src="drawRecorder.js"></script>
+<script type="text/javascript">
+
+	var draws = [];
+	draws[0] = new Drawing(document.getElementById('paper'));
+	$('#paper').on('mouseup', function(){
+		draws[draws.length] = new Drawing(document.getElementById('paper'));
+	});
+
+</script>
+</body>
+</html>

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>Essay {% block title %}{% endblock %}</title>
   <link rel="stylesheet" type="text/css" href="stylesheets/fonts.css">
-  <link rel="stylesheet" type="text/css" href="stylesheets/style.css">	
+  <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
   {% block style %}{% endblock %}
 </head>
 <body>
@@ -19,8 +19,10 @@
 <script type="text/template" id="section_template">
 	<section class="new">
 		<h1 class="headline new" data-placeholder="<%= headline %>" contenteditable><%= headline %></h1>
-		<div class="media new" data-placeholder="<%= media %>" contenteditable><%= media %>Draw</div>
-		<button class="draw">draw</button>
+		<div class="media new" data-placeholder="<%= media %>" contenteditable>
+            <div class="media-wrap"></div>
+            <button class="photo">photo</button> <button class="draw">draw</button>
+        </div>
 		<p class="description new" data-placeholder="<%= description %>" contenteditable><%= description %></p>
 		<b class="meta new" data-placeholder="<%= meta %>" contenteditable><%= meta %></b>
 	</section>
