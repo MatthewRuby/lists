@@ -1,0 +1,67 @@
+<html>
+<head>
+<title>SVG Prototype</title>
+<style type="text/css">
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    #wrap {
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+    #paper {
+        background: #00f5f5;
+        height: 100%;
+        width: 100%;
+    }
+</style>
+</head>
+<body>
+<div id="wrap">
+<svg id="paper" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink"http://www.w3.org/1999/xlink" attributeType="XML"></svg>
+</div>
+<script type="text/javascript">
+    var paper = document.getElementById('paper');
+    new Drawing(paper);
+    paper.addEventListener('touchend', function(){
+        new Drawing(paper);
+    }, false);
+
+    function Drawing(paper) {
+        var self = this,
+            startRecording,
+            g = newSVG('path'),
+            x,y,
+            attr = '';
+
+        g.setAttributeNS(null,"stroke","black");
+        g.setAttributeNS(null,"fill","none");
+        g.setAttributeNS(null,"stroke-width","3");
+
+        paper.addEventListener('touchstart', beginDraw, false);
+        paper.addEventListener('touchend', endDraw, false);
+        paper.addEventListener('touchmove', record, false);
+
+        function beginDraw(e){
+            attr += "M " + e.touches[0].clientX + " " + e.touches[0].clientY;
+            g.setAttributeNS(null,"d", attr);
+            paper.appendChild(g);
+        }
+        function endDraw(e){
+            paper.removeEventListener('touchbegin', beginDraw);
+        }
+        function record(e){
+            attr += " L " + e.touches[0].clientX + " " + e.touches[0].clientY;
+            g.setAttributeNS(null,"d", attr);
+        }
+        function newSVG(type){
+            return document.createElementNS("http://www.w3.org/2000/svg", type);
+        }
+    }
+</script>
+</body>
+</html>
