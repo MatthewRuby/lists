@@ -80,8 +80,6 @@ exports.archive = function(req, res){
 		item.meta.attrs = attrs.join(' ');
 	};
 
-	console.log(entry)
-
   	MongoClient.connect('mongodb://127.0.0.1:27017/Essay', function(err, db) {
     	if(err) throw err;
 
@@ -107,12 +105,40 @@ exports.archive = function(req, res){
     	});
 
 	});
-
 }
+
 
 
 exports.fs_upload = function(req, res){
 
+}
 
 
+exports.fork = function(req, res){
+    var MongoClient = require('mongodb').MongoClient,
+        format = require('util').format,
+        archiveName  = req.body.archiveName,
+        newName  = req.body.newName;
+
+    MongoClient.connect('mongodb://127.0.0.1:27017/Essay', function(err, db) {
+        if(err) throw err;
+
+        var collection = db.collection('Essay');
+        collection.findOne({name : archiveName}, function(err, results) {
+            if(!results){
+                res.send({"error" : "error"});
+            } else {
+
+                var entries = results.Entries;
+                for (var i = entries.length - 1; i >= 0; i--) {
+                    entries[i].forked = archiveName;
+                };
+                collection.insert({name : newName, Entries : results.Entries }, function(err, docs) {
+                    res.send({"success" : "success"});
+                    db.close();
+                });
+            }
+        });
+
+    });
 }

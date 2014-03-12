@@ -217,10 +217,46 @@ var Save = Backbone.View.extend({
 var save = new Save({ el : $("#save"), collection : page });
 
 
+
+/* Info Panel */
 $('#info-toggle').on('click', function(){
     $('body').toggleClass('open');
     $('#custom-styles').removeAttr('style');
 });
+$('#fork').on('click', function(){
+    $('#fork-info').toggle();
+});
+$('#fork-info').on('keyup', function(e){
+
+    if(e.keyCode == 13){
+
+        $.ajax({
+            type : "POST",
+            url : '/fork',
+            data : {
+                archiveName : window.location.pathname.replace('/', ''),
+                newName : $('#fork-info').val()
+            },
+            success : function(data){
+                console.log(data)
+                $('body').addClass('beginSave');
+                setTimeout(function(){
+                    $('body').removeClass('beginSave');
+                    $('body').addClass('finishSave');
+                    setTimeout(function(){
+                        $('body').removeClass('finishSave');
+                    }, 1500);
+                }, 100);
+
+            }
+        });
+
+    }
+});
+
+
+
+
 
 $('#custom-styles').on('focus', function(){
     $(document).on('keydown', addTabFormat);
@@ -229,7 +265,6 @@ $('#custom-styles').on('focus', function(){
 $('#custom-styles').on('blur', function(){
     $(document).off('keydown', addTabFormat);
 });
-
 function addTabFormat(e){
     if(e.keyCode === 9) {
         e.preventDefault();

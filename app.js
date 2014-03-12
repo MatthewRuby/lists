@@ -45,6 +45,7 @@ app.get('/', routes.index);
 app.get('/:name', routes.named);
 app.post('/archive', routes.archive);
 app.post('/photo_upload', routes.fs_upload);
+app.post('/fork', routes.fork);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

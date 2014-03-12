@@ -1,0 +1,67 @@
+.headline,
+.media,
+.description,
+.meta,
+.draw,
+.photo {
+    background: #fff;
+    border-bottom: 0;
+    display: block;
+    min-height: 22px;
+    overflow: hidden;
+    text-align: center;
+    transition: all 0.25s;
+}
+.headline {
+    font-size: 24px;
+    font-weight: 800;
+    min-height: 36px;
+}
+.media {
+    font-size: 11px;
+}
+.media svg {
+    background: #00f5f5;
+    height: 100%;
+    width: 100%;
+}
+.photo,
+.draw {
+    background: #e5e5e5;
+    border: 0;
+    border-radius: 2px;
+    display: inline-block;
+    font-size: 11px;
+    text-align: center;
+}
+.headline:focus,
+.new.headline:hover,
+.media:focus,
+.description:focus,
+.meta:focus,
+.new.media:hover,
+.new.description:hover,
+.new.meta:hover {
+    height: 22px;
+    padding: 6px 0 2px;
+}
+.new.headline,
+.new.media,
+.new.description,
+.new.meta {
+    background: #fff;
+    border-bottom: 1px solid #999;
+    font-size: 14px;
+    font-weight: 500;
+    height: 12px;
+    margin: 1px auto;
+    min-height: 0;
+    padding: 10px 0 0;
+    width: 180px;
+}
+#latest .new.headline,
+#latest .new.media,
+#latest .new.description,
+#latest .new.meta {
+    border-bottom: 1px solid transparent;
+}
