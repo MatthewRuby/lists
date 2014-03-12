@@ -387,7 +387,7 @@ section.saved .meta:before {
 	background: #fff;
 	border-bottom: 0;
 	display: block;
-	min-height: 22px;
+/*	min-height: 22px;*/
 	overflow: hidden;
 	text-align: center;
 	transition: all 0.25s;
@@ -397,6 +397,8 @@ section.saved .meta:before {
 	font-weight: 800;
 	min-height: 36px;
 }
+
+
 .media {
 	font-size: 11px;
 }
@@ -405,25 +407,44 @@ section.saved .meta:before {
 	height: 100%;
 	width: 100%;
 }
+
 .photo,
-.draw {
-	background: #e5e5e5;
+.video,
+.audio,
+.draw,
+.map {
+	background: transparent;
 	border: 0;
 	border-radius: 2px;
+	color: #000;
 	display: inline-block;
-	font-size: 11px;
+	font-size: 13px;
+	margin: 0 2px;
+	padding: 2px 5px 0;
 	text-align: center;
+	transition: color 0.25s;
+	width: 50px;
 }
+.photo:hover,
+.video:hover,
+.audio:hover,
+.draw:hover,
+.map:hover {
+	color: #999;
+}
+
 .headline:focus,
-.new.headline:hover,
-.media:focus,
 .description:focus,
 .meta:focus,
-.new.media:hover,
+.new.headline:hover,
 .new.description:hover,
 .new.meta:hover {
 	height: 22px;
 	padding: 6px 0 2px;
+}
+.new.media:hover {
+	height: 22px;
+	padding: 2px 0;
 }
 .new.headline,
 .new.media,
@@ -431,11 +452,32 @@ section.saved .meta:before {
 .new.meta {
 	background: #fff;
 	border-bottom: 1px solid #999;
-	font-size: 14px;
+	font-size: 16px;
 	font-weight: 500;
-	height: 12px;
-	margin: 1px auto;
+	height: 16px;
+	margin: 2px auto;
 	min-height: 0;
-	padding: 10px 0 0;
-	width: 180px;
+	padding: 14px 0 0;
+	width: 300px;
+}
+
+
+#analyser {
+	background: #000;
+	height: 100px;
+	width: 320px;
+}
+#record {
+	background: #e33;
+	border: 0;
+	border-radius: 50%;
+	height: 50px;
+	text-indent: -9999px;
+	transition: all 0.25s;
+	width: 50px;
+}
+#record.recording {
+	background: #000;
+	border: 0;
+	border-radius: 0;
 }

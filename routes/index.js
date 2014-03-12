@@ -39,12 +39,12 @@ exports.named = function(req, res){
 			res.render('article', {
 				Entries : data.Entries
 			});
-			
+
 		    db.close();
     	});
 
 	});
-	
+
 };
 
 
@@ -61,7 +61,7 @@ exports.archive = function(req, res){
 			ids = [],
 			classes = [],
 			attrs = [];
-		
+
 		item.meta = {};
 		item.meta.raw = metaRaw;
 
@@ -105,7 +105,14 @@ exports.archive = function(req, res){
 
     		}
     	});
-    	
+
 	});
+
+}
+
+
+exports.fs_upload = function(req, res){
+
+
 
 }

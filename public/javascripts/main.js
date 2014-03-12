@@ -6,17 +6,21 @@ var SectionModel = Backbone.Model.extend({
         description : 'Description'
     },
     initialize: function(){
-        console.log("New Section Model Created");
     }
 });
 
-
 SectionView = Backbone.View.extend({
+    hasEdit : false,
     initialize: function(model){
     },
+
     events: {
         "focus [contenteditable]" : "startEdit",
-        "blur [contenteditable]" : "endEdit"
+        "blur [contenteditable]" : "endEdit",
+        "click .photo" : "enablePhoto",
+        "click .draw" : "enableDraw",
+        "click .audio" : "enableAudio",
+        "click .video" : "enableVideo",
     },
     render: function(){
         var template = _.template( $("#section_template").html(), this.model.toJSON() );
@@ -26,22 +30,15 @@ SectionView = Backbone.View.extend({
         }, 250);
     },
     startEdit: function(e){
-        console.log('startEdit')
         $(e.target).removeClass('new');
-        if($(e.target).attr('data-placeholder') === e.target.innerText) {
+        if(e.target.innerText === $(e.target).attr('data-placeholder')) {
             e.target.innerText = '';
         } else {
             e.target.innerText = e.target.innerHTML;
         }
     },
     endEdit: function(e){
-      console.log('endEdit')
-
-      if($(e.target).attr('data-placeholder') === e.target.innerText || e.target.innerText === '') $(e.target).addClass('new')
-
-      var obj = {};
-        obj[e.target.className] = e.target.innerText;
-      this.model.set(obj);
+      if($(e.target).attr('data-placeholder') === e.target.innerText || e.target.innerText == '') $(e.target).addClass('new')
 
       if(e.target.className === 'media') {
         var str = e.target.innerText,
@@ -66,10 +63,44 @@ SectionView = Backbone.View.extend({
       } else {
         e.target.innerHTML = e.target.innerText;
       }
+    },
+
+    enablePhoto: function() {
+        $('.media').removeClass('new').addClass('photo-contents');
+        $('.media-wrap').html('<input class="photo-input" type="file">');
 
 
+        $(".photo-input").on('change', function(){
+            readURL(this);
+        });
+
+    },
+
+    enableAudio : function(e) {
+        /*
+        $('.media').removeClass('new').addClass('audio-contents');
+        $('.media-wrap').html('<canvas id="analyser"></canvas><button id="record">record</button>');
+        window.Recorder = Recorder;
+        initAudio();
+        $('.media').on('click', '#record', function(){
+            toggleRecording(this)
+        });
+        */
     }
 });
+
+function readURL(input) {
+    console.log(input)
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            console.log(e.target.result)
+            $('.media-wrap').html('<img src="' + e.target.result + '">');
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
 
 
 var SectionList = Backbone.Collection.extend({
@@ -100,34 +131,18 @@ if($('#latest').length < 1){
     $('.swipe-wrap').append('<div id="latest" class="version" data-version="0"><button id="new">new item</button></div>');
 }
 
-$('#latest').find('.meta, .headline, .media, .description').attr('contenteditable', 'true');
+$('#latest').find('.meta, .headline, .description').attr('contenteditable', 'true');
 
 var page = new SectionList();
 
 var newSect = new NewSection({ el : $("#new") });
 
 
-/*
-$('body').on('click', '.draw', function(){
-    console.log(this)
-    if( $(this).parent().find('.media svg').length < 1 ){
-        $(this).parent().find('.media').removeClass('new');
-        $(this).parent().find('.media').html('<svg id="paper" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink"http://www.w3.org/1999/xlink" attributeType="XML"></svg>');
 
-        var draws = [];
-        draws[0] = new Drawing(document.getElementById('paper'));
-        $('#paper').on('mouseup', function(){
-            draws[draws.length] = new Drawing(document.getElementById('paper'));
-        });
-
-
-    }
-});
-*/
 
 function saveFilter(el){
     var value = false;
-    if( $(el).html() !== $(el).attr('data-placeholder') ) {
+    if( $(el).html() !== $(el).attr('data-placeholder') || $(el).html() != '' ) {
         value = $(el).html();
     }
     return value
@@ -139,20 +154,22 @@ var Save = Backbone.View.extend({
         "click" : "saveData"
     },
     saveData: function(){
+        $('#latest').attr('data-version', parseInt($('#latest').attr('data-version')) + 1);
 
         var sections = $('#latest section'),
             items = [],
             name = window.location.pathname.replace('/', ''),
-            styles = $('#custom-styles').val();
-
-        $('#latest').attr('data-version', parseInt($('#latest').attr('data-version')) + 1)
+            styles_raw = $.trim($('#custom-styles').val()),
+            prefix = '[data-version="' + $('#latest').attr('data-version') + '"]',
+            styles_namespaced = styles_raw.replace(/([^\r\n,{}]+)(,(?=[^}]*{)|\s*{)/g, prefix + " \$1 {");
 
         for(var i = 0, end = sections.length; i < end; i++) {
 
             var m = {},
                 meta = saveFilter( $(sections[i]).find('.meta') ),
                 headline  = saveFilter( $(sections[i]).find('.headline') ),
-                description  = saveFilter( $(sections[i]).find('.description') );
+                description  = saveFilter( $(sections[i]).find('.description') ),
+                media = saveFilter( $(sections[i]).find('.media-wrap') );
             if(meta) {
                 m.meta = meta;
             }
@@ -162,8 +179,8 @@ var Save = Backbone.View.extend({
             if(description) {
                 m.description = description;
             }
-            if( $(sections[i]).find('.media img') ){
-                m.media = $(sections[i]).find('.media img').attr('src')
+            if( media ){
+                m.media = media;
             }
 
             items.push(m);
@@ -173,12 +190,11 @@ var Save = Backbone.View.extend({
             name : name,
             entry : {
                 "Version" : parseInt($('#latest').attr('data-version')),
-                "styles" : encodeURIComponent(styles),
+                "styles_raw" : encodeURIComponent(styles_raw),
+                "styles_namespaced" : encodeURIComponent(styles_namespaced),
                 "items" : items
             }
         }
-
-        console.log(data)
 
         $.ajax({
             type : "POST",
@@ -257,58 +273,10 @@ $('#next').on('click', function(){
 
 
 
-function Drawing(paper) {
-    var self = this,
-        startRecording,
-        g = newSVG('path'),
-        x,y,
-        pts = [],
-        attr = '',
-        bGrabbing = false;
-
-    g.setAttributeNS(null,"stroke","black");
-    g.setAttributeNS(null,"fill","none");
-    g.setAttributeNS(null,"stroke-width","3");
-
-    paper.addEventListener('mousedown', beginDraw, false);
-    paper.addEventListener('mouseup', endDraw, false);
-    paper.addEventListener('mousemove', function(e){
-        x = e.offsetX;
-        y = e.offsetY;
-    }, false);
 
 
-    function beginDraw(e){
-        if(!bGrabbing){
-            attr += "M " + e.offsetX + " " + e.offsetY;
-            g.setAttributeNS(null,"d", attr);
-            paper.appendChild(g);
-            startRecording = setInterval(record, 16);
-        }
-    }
-    function endDraw(e){
-        clearInterval(startRecording)
-        paper.removeEventListener('mousedown', beginDraw);
-    }
-    function record(){
-        attr += " L " + x + " " + y;
-        g.setAttributeNS(null,"d", attr);
-    }
 
 
-    g.addEventListener('mousedown', function(){
-    //    console.log('down')
-    }, false);
-
-    g.addEventListener('mouseup', function(){
-    //    console.log('up')
-    }, false);
-
-    function newSVG(type){
-        return document.createElementNS("http://www.w3.org/2000/svg", type);
-    }
-
-}
 
 
 

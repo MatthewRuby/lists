@@ -4,23 +4,26 @@
 
 {% block style %}
 <style type="text/css" id="custom-stylesheet">
-
+{% for entry in Entries %}
+	{{ decodeURIComponent(entry.styles_namespaced) }}
+{% endfor %}
 </style>
 {% endblock %}
 
 {% block content %}
+
 	<div id="info">
 		<button id="info-toggle">i</button>
 		<button id="save">Save</button>
-		<textarea id="custom-styles"></textarea>
+		<textarea id="custom-styles">{% for entry in Entries %}{% if loop.last %}{{ decodeURIComponent(entry.styles_raw) }}{% endif %}{% endfor %}</textarea>
 	</div>
-	
+
 	<main id="main">
 		<div id='slider' class='swipe'>
   		<div class='swipe-wrap'>
 
 			{% for entry in Entries %}
-				
+
 				{% if loop.last %}
 					{% set latest = true %}
 				{% endif %}
@@ -29,7 +32,7 @@
 
 					{% for item in entry.items %}
 
-	
+
 
 						<section id="{{ item.meta.ids }}" class="saved {{ item.meta.classes }}" {{ item.meta.attrs }}>
 
@@ -40,9 +43,16 @@
 							{% endif %}
 
 							{% if item.media %}
-								<div class="media"><img src="{{ item.media }}"></div>
+								<div class="media">{% autoescape false %}{{ item.media }}{% endautoescape %}</div>
 							{% elseif latest == true %}
-								<div class="media new" data-placeholder="Media" contenteditable>Media</div>
+								<div class="media new">
+						            <div class="media-wrap"></div>
+						            <button class="photo">Photo</button>
+						            <!-- <button class="video">Video</button>
+						            <button class="audio">Audio</button> -->
+						            <button class="draw">Draw</button>
+						            <button class="map">Map</button>
+						        </div>
 							{% endif %}
 
 							{% if description in item %}
@@ -56,7 +66,7 @@
 							{% elseif latest == true %}
 								<b class="meta new" data-placeholder="meta-data" contenteditable>meta-data</b>
 							{% endif %}
-		
+
 						</section>
 
 						{% endfor %}
@@ -74,7 +84,7 @@
 	</main>
 
 
-	
+
 {% endblock %}
 
 
