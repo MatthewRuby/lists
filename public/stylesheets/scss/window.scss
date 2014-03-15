@@ -2,8 +2,9 @@ body {
     height: 100%;
     position: relative;
 }
-body:after {
+#modal {
     color: #ccc;
+    display: none;
     font-family: 'Open Sans';
     font-size: 36px;
     font-weight: 800;
@@ -14,12 +15,12 @@ body:after {
     transition: all 0.5s ease-out;
     width: 100%;
 }
-body.beginSave:after {
-    content: "Saved";
+body.beginMessage #modal {
+    display: block;
     opacity: 1;
 }
-body.finishSave:after {
-    content: "Saved";
+body.finishMessage #modal {
+    display: block;
     opacity: 0;
     transform: scale(2);
     transform-origin: center center;
@@ -39,8 +40,8 @@ body.finishSave:after {
 }
 
 #main {
-    border-left: 1px solid #ccc;
-    border-right: 1px solid #ccc;
+/*    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;*/
     display: block;
     height: 100%;
     margin: 0 auto;

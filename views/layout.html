@@ -7,40 +7,29 @@
   {% block style %}{% endblock %}
 </head>
 <body>
+  <div id="wrap">
+  	{% block content %}{% endblock %}
+  </div>
+  <div id="modal" class="modal"></div>
 
-    <div id="wrap">
-    	{% block content %}{% endblock %}
-    </div>
-
-    <div id="modal" class="modal"></div>
-
-    <script type="text/javascript" data-main="javascripts/new_main.js" src="javascripts/lib/require.js"></script>
-<!-- <script type="text/javascript" src="javascripts/lib/jquery.js"></script>
-<script type="text/javascript" src="javascripts/lib/underscore-min.js"></script>
-<script type="text/javascript" src="javascripts/lib/backbone-min.js"></script>
-<script type="text/javascript" src="javascripts/lib/swipe.js"></script> -->
-<script type="text/template" id="section_template">
-	<section class="new">
-		<h1 class="headline new" data-placeholder="<%= headline %>" contenteditable><%= headline %></h1>
+  <script type="text/template" id="section_template">
+		<h1 class="headline new" data-placeholder="Headline">Headline</h1>
 		<div class="media new">
             <div class="media-controls"></div>
             <button class="photo">Photo</button>
             <button class="draw">Draw</button>
         </div>
-		<p class="description new" data-placeholder="<%= description %>" contenteditable><%= description %></p>
-		<b class="meta new" data-placeholder="<%= meta %>" contenteditable><%= meta %></b>
-	</section>
-</script>
-<script type="text/template" id="upload_template">
-  <form class="upload_form" method='post' action='/upload' enctype='multipart/form-data'>
-    <input class="file" type='file' name='image'/>
-    <input type='submit' />
-  </form>
-</script>
+		<p class="description new" data-placeholder="Description">Description</p>
+		<b class="meta new" data-placeholder="Tags">Tags</b>
+  </script>
 
-<!-- <script type="text/javascript" src="javascripts/audio.js"></script>
-<script type="text/javascript" src="javascripts/draw.js"></script>
-<script type="text/javascript" src="javascripts/main.js"></script> -->
+  <script type="text/template" id="upload_template">
+    <form class="upload_form" method='post' action='/upload' enctype='multipart/form-data'>
+      <input class="file" type='file' name='image'/>
+      <input type='submit' />
+    </form>
+  </script>
 
+  <script type="text/javascript" data-main="javascripts/main.js" src="javascripts/lib/require.js"></script>
 </body>
 </html>

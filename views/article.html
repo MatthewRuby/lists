@@ -37,7 +37,7 @@
 				{% endif %}
 
 				<div id="{% if latest == true %}latest{% endif %}" class="version " data-version="{{ entry.Version }}" {% if entry.forked %}data-forked="{{ entry.forked }}"{% endif %}>
-
+					<div class="item-wrap">
 					{% if entry.forked %}<a class="forked" href="{{ entry.forked }}">/{{ entry.forked }}</a>{% endif %}
 
 					{% for item in entry.items %}
@@ -75,13 +75,12 @@
 						</section>
 
 						{% endfor %}
-
-						{% if latest == true %}<button id="new">new item</button>{% endif %}
-
 					</div>
-
+					{% if latest == true %}
+					<button id="new">new item</button>
+					{% endif %}
+				</div>
 			{% endfor %}
-
 			</div>
 		</div>
 

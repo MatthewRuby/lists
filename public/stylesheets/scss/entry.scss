@@ -1,7 +1,6 @@
 [data-forked] {
     background: #e5e5e5;
     font-family: 'Open Sans Condensed';
-/*    font-style: italic;*/
 }
 [data-forked] .headline {
     font-size: 20px;
@@ -32,6 +31,9 @@
     top: 0;
     width: 800px;
 }
+.item-wrap {
+    display: block;
+}
 #new {
     background: #fff;
     border: solid 1px #666;
@@ -51,8 +53,6 @@
 }
 #new:hover {
     color: #666;
-    background: #f5f5f5;
-    border: solid 2px #333;
 }
 .version section.new {
     opacity: 0;

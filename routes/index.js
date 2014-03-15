@@ -36,9 +36,9 @@ exports.named = function(req, res){
 
 		    var data = results ? results : {};
 
-			res.render('article', {
-				Entries : data.Entries
-			});
+  			res.render('article', {
+  				Entries : data.Entries
+  			});
 
 		    db.close();
     	});
