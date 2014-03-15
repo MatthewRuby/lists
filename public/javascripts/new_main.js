@@ -1,10 +1,25 @@
-require(['jquery',
-        'underscore',
-        'lib/swipe-req',
-        'modules/Page'
-    ],
-    function($, _, swipe, Page) {
+requirejs.config({
+    shim: {
+        'lib/jquery': {
+            exports: '$'
+        },
+        'lib/underscore-min': {
+            exports: '_'
+        },
+        'lib/backbone-min': {
+            deps: ['lib/underscore-min', 'lib/jquery'],
+            exports: 'Backbone'
+        }
+    }
+});
 
-        Page.initCarousel()
+require(['lib/jquery',
+        'lib/underscore-min',
+        'lib/backbone-min',
+        'lib/swipe-req'
+    ],
+    function($, _, Backbone, swipe) {
+        console.log(Backbone)
+    //    Page.initCarousel()
 
 });

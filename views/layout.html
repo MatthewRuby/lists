@@ -14,34 +14,33 @@
 
     <div id="modal" class="modal"></div>
 
-<script type="text/javascript" src="javascripts/lib/jquery.js"></script>
+    <script type="text/javascript" data-main="javascripts/new_main.js" src="javascripts/lib/require.js"></script>
+<!-- <script type="text/javascript" src="javascripts/lib/jquery.js"></script>
 <script type="text/javascript" src="javascripts/lib/underscore-min.js"></script>
 <script type="text/javascript" src="javascripts/lib/backbone-min.js"></script>
-<script type="text/javascript" src="javascripts/lib/swipe.js"></script>
+<script type="text/javascript" src="javascripts/lib/swipe.js"></script> -->
 <script type="text/template" id="section_template">
 	<section class="new">
 		<h1 class="headline new" data-placeholder="<%= headline %>" contenteditable><%= headline %></h1>
 		<div class="media new">
-            <div class="media-wrap"></div>
+            <div class="media-controls"></div>
             <button class="photo">Photo</button>
-            // <button class="video">Video</button>
-            // <button class="audio">Audio</button>
             <button class="draw">Draw</button>
-            <button class="map">Map</button>
         </div>
 		<p class="description new" data-placeholder="<%= description %>" contenteditable><%= description %></p>
 		<b class="meta new" data-placeholder="<%= meta %>" contenteditable><%= meta %></b>
 	</section>
 </script>
 <script type="text/template" id="upload_template">
-    <form>
-        <input type="file" accept="image/*;capture=camera">
-    </form>
+  <form class="upload_form" method='post' action='/upload' enctype='multipart/form-data'>
+    <input class="file" type='file' name='image'/>
+    <input type='submit' />
+  </form>
 </script>
 
-<script type="text/javascript" src="javascripts/audio.js"></script>
+<!-- <script type="text/javascript" src="javascripts/audio.js"></script>
 <script type="text/javascript" src="javascripts/draw.js"></script>
-<script type="text/javascript" src="javascripts/main.js"></script>
+<script type="text/javascript" src="javascripts/main.js"></script> -->
 
 </body>
 </html>

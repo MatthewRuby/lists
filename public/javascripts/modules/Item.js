@@ -12,8 +12,6 @@ define(['lib/jquery', 'modules/ItemTemplate'], function($, template) {
 
         newBlankEntry: function() {
 
-            template
-
         },
 
         setupEntry: function(section) {

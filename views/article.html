@@ -20,7 +20,7 @@
 		<button id="fork">Fork Entry</button>
 		<input id="fork-info" type="text" placeholder="enter new url for fork"></input>
 		<label for="custom-styles">Enter Custom Styles</label>
-		<textarea id="custom-styles">{% for entry in Entries %}{% if loop.last %}{{ decodeURIComponent(entry.styles_raw) }}{% endif %}{% endfor %}</
+		<textarea id="custom-styles">{% for entry in Entries %}{% if loop.last %}{{ decodeURIComponent(entry.styles_raw) }}{% endif %}{% endfor %}</textarea>
 	</div>
 
 	<button id="prev">prev</button>
@@ -38,7 +38,7 @@
 
 				<div id="{% if latest == true %}latest{% endif %}" class="version " data-version="{{ entry.Version }}" {% if entry.forked %}data-forked="{{ entry.forked }}"{% endif %}>
 
-					{% if entry.forked %}<a class="forked" href="{{ entry.forked }}">{{ entry.forked }}</a>{% endif %}
+					{% if entry.forked %}<a class="forked" href="{{ entry.forked }}">/{{ entry.forked }}</a>{% endif %}
 
 					{% for item in entry.items %}
 
@@ -56,10 +56,7 @@
 								<div class="media new">
 						            <div class="media-wrap"></div>
 						            <button class="photo">Photo</button>
-						            <!-- <button class="video">Video</button>
-						            <button class="audio">Audio</button> -->
 						            <button class="draw">Draw</button>
-						            <button class="map">Map</button>
 						        </div>
 							{% endif %}
 
