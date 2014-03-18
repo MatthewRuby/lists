@@ -18,11 +18,10 @@ require(['lib/jquery',
         'lib/backbone-min',
         'lib/swipe-req',
         'modules/Page',
-        'modules/Item'
+        'modules/Item',
+        'modules/DataTransfer'
     ],
-    function($, _, Backbone, swipe, Page, Item) {
-
-
+    function($, _, Backbone, swipe, Page, Item, DataTransfer) {
 
         Page.init();
 
@@ -30,9 +29,9 @@ require(['lib/jquery',
             list = [];
 
         _.each(sections, function(section){
-            list.push( Item.setupEntry( $(section) ) );
+            var item = Item.setupEntry( $(section) )
+            list.push( item );
         });
-
 
         $('#new').on('click', function(){
             var section = document.createElement('section');
@@ -40,5 +39,10 @@ require(['lib/jquery',
             $('#latest').find('.item-wrap').append(section);
             list.push( Item.newBlankEntry( $(section) ) );
         });
+
+        $('#save').on('click', function(){
+            DataTransfer.saveData(list)
+        });
+
 
 });

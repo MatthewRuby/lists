@@ -1,9 +1,6 @@
-define(['lib/jquery', 'lib/backbone-min', 'modules/DataTransfer', 'modules/Utils'], function($, Backbone, DataTransfer, Utils) {
+define(['lib/jquery', 'lib/backbone-min', 'modules/Utils'], function($, Backbone, Utils) {
 
     /* Info Panel */
-    $('#save').on('click', function(){
-        DataTransfer.saveData()
-    });
 
     $('#info-toggle').on('click', function(){
         $('body').toggleClass('open');

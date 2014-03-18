@@ -6,7 +6,7 @@ define(['lib/jquery', 'lib/backbone-min', 'modules/Utils'], function($, Backbone
             this.bHasEdit = bEdit;
         },
 
-        saveData: function() {
+        saveData: function(list) {
             var self = this;
 
             if(self.bHasEdit){
@@ -14,9 +14,9 @@ define(['lib/jquery', 'lib/backbone-min', 'modules/Utils'], function($, Backbone
                 $.ajax({
                     type : "POST",
                     url : '/archive',
-                    data : self.collectData(),
+                    data : self.collectData(list),
                     success : function(data){
-                        Utils.feedback('Saving', null);
+                //        Utils.feedback('Saving', null);
                     }
                 });
             } else {
@@ -26,7 +26,7 @@ define(['lib/jquery', 'lib/backbone-min', 'modules/Utils'], function($, Backbone
 
         },
 
-        collectData: function(){
+        collectData: function(list){
             var sections = $('#latest section'),
                 items = [],
                 name = window.location.pathname.replace('/', ''),
@@ -34,6 +34,17 @@ define(['lib/jquery', 'lib/backbone-min', 'modules/Utils'], function($, Backbone
                 prefix = '[data-version="' + $('#latest').attr('data-version') + '"]',
                 styles_namespaced = styles_raw.replace(/([^\r\n,{}]+)(,(?=[^}]*{)|\s*{)/g, prefix + " \$1 {");
 
+
+            _.each(list, function(item){
+                items.push(item.model.attributes);
+                // if(item.model.attributes.photo !== null){
+                //     console.log(photo)
+                // }
+            });
+
+            // console.log(temp)
+
+/*
             for(var i = 0, end = sections.length; i < end; i++) {
 
                 var m = {},
@@ -61,7 +72,7 @@ define(['lib/jquery', 'lib/backbone-min', 'modules/Utils'], function($, Backbone
 
                 items.push(m);
             }
-
+*/
             var data = {
                 name : name,
                 entry : {

@@ -139,46 +139,38 @@ exports.fork = function(req, res){
 }
 
 
-exports.fs_upload = function(req, res){
-    var fs = require('fs'),
-        im = require('imagemagick');
-        console.log(req)
-        console.dir(req.files)
+
 /*
-    fs.readFile(req.files.image.path, function (err, data) {
+ * Handle file upload
+ */
+exports.upload_file = function(req, res) {
+    console.log('upload file')
+    var fs = require('fs'),
+        util = require('util'),
+        formidable = require('formidable'),
+        form = new formidable.IncomingForm(),
+        files = [],
+        fields = [],
+        refpath;
 
-        var imageName = req.files.image.name
+    form.uploadDir = './public/uploads/full/';
 
-        /// If there's an error
-        if(!imageName){
-
-            console.log("There was an error")
-            res.redirect("/");
-            res.end();
-
-        } else {
-
-           var newPath = __dirname + "/uploads/fullsize/" + imageName;
-
-          var thumbPath = __dirname + "/uploads/thumbs/" + imageName;
-
-          /// write file to uploads/fullsize folder
-          fs.writeFile(newPath, data, function (err) {
-
-            /// write file to uploads/thumbs folder
-              im.resize({
-                  srcPath: newPath,
-                  dstPath: thumbPath,
-                  width:   200
-                }, function(err, stdout, stderr){
-                  if (err) throw err;
-                  console.log('resized image to fit within 200x200px');
-                });
-
-               res.redirect("/uploads/fullsize/" + imageName);
-
-          });
-        }
+    form.on('field', function(field, value) {
+        console.log(field, value);
+        fields.push([field, value]);
+    }).on('file', function(field, file) {
+        console.log(field, file);
+        refpath = file.name;
+        fs.rename(file.path, form.uploadDir + "/" + refpath);
+        files.push([field, file]);
+    }).on('end', function() {
+        console.log('-> upload done');
+        res.send({filePath: refpath})
+        // res.writeHead(200, {'content-type': 'text/plain'});
+        // res.write('received fields:\n\n '+util.inspect(fields));
+        // res.write('\n\n');
+        // res.end('received files:\n\n '+util.inspect(files));
     });
-*/
+    form.parse(req);
+
 }

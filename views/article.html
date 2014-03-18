@@ -51,10 +51,20 @@
 							{% endif %}
 
 							{% if item.media %}
-								<div class="media">{% autoescape false %}{{ item.media }}{% endautoescape %}</div>
+								{% if item.media.photo %}
+								<div class="media">
+									<div class="media-wrap"><img src="uploads/full/{{ item.media.photo }}"></div>
+									{% if latest == true %}
+							            <div class="media-controls"></div>
+							            <button class="photo">Photo</button>
+							            <button class="draw">Draw</button>
+									{% endif %}
+								</div>
+								{% endif %}
 							{% elseif latest == true %}
 								<div class="media new">
 						            <div class="media-wrap"></div>
+						            <div class="media-controls"></div>
 						            <button class="photo">Photo</button>
 						            <button class="draw">Draw</button>
 						        </div>

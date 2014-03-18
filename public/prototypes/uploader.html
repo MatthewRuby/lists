@@ -1,0 +1,72 @@
+<html>
+<head>
+<title>SVG Prototype</title>
+<style type="text/css">
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    #wrap {
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+    #paper {
+        background: #00f5f5;
+        height: 100%;
+        width: 100%;
+    }
+</style>
+</head>
+<body>
+<div id="wrap">
+    <form class="upload_form" method='post' action='/photo_upload' enctype='multipart/form-data'>
+      <input class="file" type='file' name='file'/>
+      <input type='submit' />
+    </form>
+</div>
+<script type="text/javascript" src="../javascripts/lib/jquery.js"></script>
+<script type="text/javascript">
+
+(function(){
+    var formData;
+/*
+    $('.upload_form').on('change', function(){
+        console.log('change')
+        var input = $(this).find('.file')[0];
+        console.log(input)
+
+        formData = new FormData(this);
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#wrap').append('<img src="' + e.target.result + '">');
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    });*/
+    // $('.upload_form').on('submit', function(e){
+    //     e.preventDefault();
+    //     console.log(e)
+    //     $.ajax({
+    //         type : "POST",
+    //         url : '/photo_upload',
+    //         data : {files: 'hello'},
+    //         cache: false,
+    //         contentType: false,
+    //         processData: false,
+    //         success : function(data){
+    //             console.log(data)
+    //             // m.media.photo =  data.path;
+    //         }
+    //     });
+    // });
+
+})();
+
+</script>
+</body>
+</html>

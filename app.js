@@ -36,6 +36,11 @@ app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(express.json());
+app.use(express.urlencoded());
+//app.use(express.multipart());
+
+
 // development only
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
@@ -44,7 +49,7 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/:name', routes.named);
 app.post('/archive', routes.archive);
-app.post('/photo_upload', routes.fs_upload);
+app.post('/photo_upload', routes.upload_file);
 app.post('/fork', routes.fork);
 
 http.createServer(app).listen(app.get('port'), function(){
