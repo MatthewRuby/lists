@@ -62,17 +62,15 @@
 .media-btn.active {
     display: block;
 }
-
-.media svg {
-    background: #00f5f5;
-    height: 100%;
-    width: 100%;
+.hasMedia .media-btn,
+.hasMedia .media-btn.active {
+    display: none;
 }
 
 .media-controls {
-    background: #000;
     display: none;
 }
+.hasMedia .media-controls,
 .media-controls.active {
     display: block;
 }
@@ -80,10 +78,9 @@
 .draw,
 .clear,
 .resize,
-.draw,
 .undo,
 .map {
-    background: #333;
+    background: #999;
     border: 0;
     border-radius: 3px;
     color: #fff;
@@ -100,33 +97,35 @@
 .draw:hover,
 .clear:hover,
 .resize:hover,
-.draw:hover,
 .undo:hover,
 .map:hover {
-    background: #111;
+    background: #666;
+}
+.resize,
+.undo {
+    display: none;
+}
+.hasPhoto .resize,
+.drawing .undo {
+    display: block;
 }
 .file {
     display: none;
 }
 
-
-
-#analyser {
-    background: #000;
-    height: 100px;
-    width: 320px;
+.media-wrap {
+    position: relative;
 }
-#record {
-    background: #e33;
-    border: 0;
-    border-radius: 50%;
-    height: 50px;
-    text-indent: -9999px;
-    transition: all 0.25s;
-    width: 50px;
+.media-wrap img {
+    position: relative;
+    z-index: 1;
 }
-#record.recording {
-    background: #000;
-    border: 0;
-    border-radius: 0;
+.media-wrap svg {
+    background: transparent;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 2;
 }

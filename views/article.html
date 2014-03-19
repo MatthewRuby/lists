@@ -50,22 +50,20 @@
 								<h1 class="headline new" data-placeholder="Headline" contenteditable>Headline</h1>
 							{% endif %}
 
-							{% if item.media %}
-								{% if item.media.photo %}
-								<div class="media">
+							{% if item.media || latest == true %}
+								<div class="media {% if item.media.photo || item.media.draw %}hasMedia{% endif %}">
 									<div class="media-wrap">
-										<img src="uploads/full/{{ item.media.photo }}">
+										{% if item.media.photo %}
+											<img src="{{ item.media.photo }}">
+										{% endif %}
+										{% if item.media.draw %}
+											<svg class="paper" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink"http://www.w3.org/1999/xlink" attributeType="XML">
+												{% autoescape false %}{{ item.media.draw }}{% endautoescape %}
+											</svg>
+										{% endif %}
 									</div>
-									{% if latest == true %}
-							            {% include "./media_controls.html" %}
-									{% endif %}
+									{% if latest == true %}{% include "./media_controls.html" %}{% endif %}
 								</div>
-								{% endif %}
-							{% elseif latest == true %}
-								<div class="media new">
-						            <div class="media-wrap"></div>
-						            {% include "./media_controls.html" %}
-						        </div>
 							{% endif %}
 
 							{% if description in item %}

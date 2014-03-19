@@ -151,7 +151,8 @@ exports.upload_file = function(req, res) {
         form = new formidable.IncomingForm(),
         files = [],
         fields = [],
-        refpath;
+        refpath, publicDir;
+
 
     form.uploadDir = './public/uploads/full/';
 
@@ -159,17 +160,11 @@ exports.upload_file = function(req, res) {
         console.log(field, value);
         fields.push([field, value]);
     }).on('file', function(field, file) {
-        console.log(field, file);
         refpath = file.name;
         fs.rename(file.path, form.uploadDir + "/" + refpath);
         files.push([field, file]);
     }).on('end', function() {
-        console.log('-> upload done');
-        res.send({filePath: refpath})
-        // res.writeHead(200, {'content-type': 'text/plain'});
-        // res.write('received fields:\n\n '+util.inspect(fields));
-        // res.write('\n\n');
-        // res.end('received files:\n\n '+util.inspect(files));
+        res.send({filePath: '/uploads/full/' + refpath})
     });
     form.parse(req);
 

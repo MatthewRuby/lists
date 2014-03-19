@@ -1,4 +1,4 @@
-define('modules/Item', ['lib/jquery', 'lib/backbone-min'], function($, Backbone) {
+define('modules/Item', ['lib/jquery', 'lib/backbone-min', 'modules/Drawing'], function($, Backbone, Drawing) {
 
     var ItemModel = Backbone.Model.extend({
         initialize: function(){}
@@ -8,17 +8,20 @@ define('modules/Item', ['lib/jquery', 'lib/backbone-min'], function($, Backbone)
         initialize: function() {
             var self = this;
             this.$el.find('.meta, .headline, .description').attr('contenteditable', 'true');
+
             this.$el.find('.media-btn').on('click', function(){
-                console.log(self.$el.find('.media-controls'))
                 $(this).toggleClass('active');
                 self.$el.find('.media-controls').toggleClass('active');
             });
+
             this.$el.find('.photo').on('click', function(){
-                self.$el.find('.file').trigger('click');
                 self.enablePhoto(self.$el, self.model);
             });
             this.$el.find('.draw').on('click', function(){
                 self.enableDraw(self.$el, self.model);
+            });
+            this.$el.find('.clear').on('click', function(){
+                self.clearMedia(self.$el, self.model);
             });
 
         },
@@ -45,7 +48,6 @@ define('modules/Item', ['lib/jquery', 'lib/backbone-min'], function($, Backbone)
             }
         },
         endEdit: function(e){
-            console.log(this)
             var edit = $(e.target),
                 placeholder = edit.attr('data-placeholder'),
                 key = edit.attr('class');
@@ -61,6 +63,7 @@ define('modules/Item', ['lib/jquery', 'lib/backbone-min'], function($, Backbone)
         },
 
         enablePhoto: function(el, model) {
+            el.find('.file').trigger('click');
             el.find('.media').removeClass('new');
             el.find('.file').on('change', function(){
                 var input = this;
@@ -73,16 +76,43 @@ define('modules/Item', ['lib/jquery', 'lib/backbone-min'], function($, Backbone)
                     xhr.send(formData);
                     xhr.onload = function (e) {
                         var res = JSON.parse(xhr.response)
-                        model.set({ media : {photo : res.filePath} });
-                    // /    el.find('.media-wrap').prepend('<div class="media-wrap"><img src="uploads/full/' + res.filePath + '"></div>');
+                        model.set({ media: {
+                            photo: res.filePath,
+                            draw: el.find('.paper').html(),
+                        }});
+                        if(el.find('.media-wrap img').length){
+                            el.find('.media-wrap img').attr('src', res.filePath);
+                        } else {
+                            el.find('.media-wrap').append('<img src="' + res.filePath + '">');
+                        }
+
                     }
                 }
             });
 
         },
 
-        enableDraw : function(e) {
+        enableDraw : function(el, model) {
+            var paper = el.find('.paper');
+            if(!paper.length){
+                el.find('.media-wrap').append('<svg class="paper" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink"http://www.w3.org/1999/xlink" attributeType="XML"></svg>');
+                paper = el.find('.paper');
+            }
+            el.find('.media-wrap').addClass('hasDrawing');
+            new Drawing(paper);
+            paper.on('mouseup', function(){
+                model.set({ media: {
+                    draw: paper.html(),
+                    photo : el.find('.media-wrap img').attr('src'),
+                }});
+                new Drawing(paper);
+            });
 
+        },
+
+        clearMedia: function(el, model) {
+            el.find('.media-wrap').html('');
+            model.set({ media: {photo: null, draw: null} });
         }
     });
 
@@ -99,7 +129,7 @@ define('modules/Item', ['lib/jquery', 'lib/backbone-min'], function($, Backbone)
                 meta : section.find('.meta-data').text(),
                 headline : section.find('.headline').html(),
                 media : {
-                    photo : null,
+                    photo : section.find('.media-wrap img').attr('src'),
                     draw : null
                 },
                 description : section.find('.description').html()
