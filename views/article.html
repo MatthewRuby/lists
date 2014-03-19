@@ -53,20 +53,18 @@
 							{% if item.media %}
 								{% if item.media.photo %}
 								<div class="media">
-									<div class="media-wrap"><img src="uploads/full/{{ item.media.photo }}"></div>
+									<div class="media-wrap">
+										<img src="uploads/full/{{ item.media.photo }}">
+									</div>
 									{% if latest == true %}
-							            <div class="media-controls"></div>
-							            <button class="photo">Photo</button>
-							            <button class="draw">Draw</button>
+							            {% include "./media_controls.html" %}
 									{% endif %}
 								</div>
 								{% endif %}
 							{% elseif latest == true %}
 								<div class="media new">
 						            <div class="media-wrap"></div>
-						            <div class="media-controls"></div>
-						            <button class="photo">Photo</button>
-						            <button class="draw">Draw</button>
+						            {% include "./media_controls.html" %}
 						        </div>
 							{% endif %}
 

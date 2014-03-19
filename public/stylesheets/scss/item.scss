@@ -2,63 +2,26 @@
 .media,
 .description,
 .meta,
-.draw,
-.photo {
+.media-btn {
     border-bottom: 0;
     display: block;
     overflow: hidden;
     text-align: center;
-    transition: all 0.25s;
+    transition: padding 0.25s;
 }
 .headline {
     font-size: 24px;
     font-weight: 800;
     min-height: 36px;
 }
-.media {
-    font-size: 11px;
-}
-.media svg {
-    background: #00f5f5;
-    height: 100%;
-    width: 100%;
-}
-.photo,
-.video,
-.audio,
-.draw,
-.map {
-    background: transparent;
-    border: 0;
-    border-radius: 2px;
-    color: #000;
-    display: inline-block;
-    font-size: 13px;
-    margin: 0 2px;
-    padding: 2px 5px 0;
-    text-align: center;
-    transition: color 0.25s;
-    width: 50px;
-}
-.photo:hover,
-.video:hover,
-.audio:hover,
-.draw:hover,
-.map:hover {
-    color: #999;
-}
 .headline:focus,
 .description:focus,
 .meta:focus,
 .new.headline:hover,
+.new.media:hover,
 .new.description:hover,
 .new.meta:hover {
-    height: 22px;
-    padding: 6px 0 2px;
-}
-.new.media:hover {
-    height: 22px;
-    padding: 2px 0;
+    padding: 3px 0;
 }
 .new.headline,
 .new.media,
@@ -67,10 +30,10 @@
     border-bottom: 1px solid #999;
     font-size: 16px;
     font-weight: 500;
-    height: 16px;
-    margin: 2px auto;
+    height: 24px;
+    margin: 0 auto;
     min-height: 0;
-    padding: 14px 0 0;
+    padding: 24px 0 0;
     width: 300px;
 }
 #latest .new.headline,
@@ -85,6 +48,67 @@
 #latest[data-version="0"] .new.meta {
     border-bottom: 1px solid #999;
 }
+
+
+.media-btn {
+    background: transparent;
+    border: 0;
+    display: none;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    margin: 0 auto;
+}
+.media-btn.active {
+    display: block;
+}
+
+.media svg {
+    background: #00f5f5;
+    height: 100%;
+    width: 100%;
+}
+
+.media-controls {
+    background: #000;
+    display: none;
+}
+.media-controls.active {
+    display: block;
+}
+.photo,
+.draw,
+.clear,
+.resize,
+.draw,
+.undo,
+.map {
+    background: #333;
+    border: 0;
+    border-radius: 3px;
+    color: #fff;
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 100;
+    margin: 0 2px;
+    padding: 4px;
+    text-align: center;
+    transition: background 0.25s;
+    width: 50px;
+}
+.photo:hover,
+.draw:hover,
+.clear:hover,
+.resize:hover,
+.draw:hover,
+.undo:hover,
+.map:hover {
+    background: #111;
+}
+.file {
+    display: none;
+}
+
 
 
 #analyser {

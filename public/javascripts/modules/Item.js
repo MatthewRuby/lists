@@ -1,6 +1,5 @@
 define('modules/Item', ['lib/jquery', 'lib/backbone-min'], function($, Backbone) {
 
-
     var ItemModel = Backbone.Model.extend({
         initialize: function(){}
     });
@@ -9,12 +8,19 @@ define('modules/Item', ['lib/jquery', 'lib/backbone-min'], function($, Backbone)
         initialize: function() {
             var self = this;
             this.$el.find('.meta, .headline, .description').attr('contenteditable', 'true');
+            this.$el.find('.media-btn').on('click', function(){
+                console.log(self.$el.find('.media-controls'))
+                $(this).toggleClass('active');
+                self.$el.find('.media-controls').toggleClass('active');
+            });
             this.$el.find('.photo').on('click', function(){
+                self.$el.find('.file').trigger('click');
                 self.enablePhoto(self.$el, self.model);
             });
             this.$el.find('.draw').on('click', function(){
                 self.enableDraw(self.$el, self.model);
             });
+
         },
         events: {
             "focus [contenteditable]" : "startEdit",
@@ -55,51 +61,28 @@ define('modules/Item', ['lib/jquery', 'lib/backbone-min'], function($, Backbone)
         },
 
         enablePhoto: function(el, model) {
-            console.log('photo')
             el.find('.media').removeClass('new');
-            var template = _.template( $("#upload_template").html(), {} );
-            el.find('.media-controls').append( template );
             el.find('.file').on('change', function(){
-                console.log('change')
                 var input = this;
-                console.log(input.files[0])
-
                 if (input.files && input.files[0]) {
-                    console.log('inside')
                     var reader = new FileReader(),
                         xhr = new XMLHttpRequest(),
                         formData = new FormData();
-
                     formData.append('file', input.files[0]);
-
                     xhr.open("POST", "/photo_upload");
                     xhr.send(formData);
                     xhr.onload = function (e) {
                         var res = JSON.parse(xhr.response)
                         model.set({ media : {photo : res.filePath} });
-                        el.find('.media').prepend('<div class="media-wrap"><img src="uploads/full/' + res.filePath + '"></div>');
+                    // /    el.find('.media-wrap').prepend('<div class="media-wrap"><img src="uploads/full/' + res.filePath + '"></div>');
                     }
-
                 }
-
             });
 
         },
 
         enableDraw : function(e) {
 
-        },
-
-        enableAudio : function(e) {
-            /*
-            $('.media').removeClass('new').addClass('audio-contents');
-            $('.media-wrap').html('<canvas id="analyser"></canvas><button id="record">record</button>');
-            window.Recorder = Recorder;
-            initAudio();
-            $('.media').on('click', '#record', function(){
-                toggleRecording(this)
-            });
-            */
         }
     });
 

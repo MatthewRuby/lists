@@ -16,16 +16,10 @@
 		<h1 class="headline new" data-placeholder="Headline">Headline</h1>
 		<div class="media new">
             <div class="media-wrap"></div>
-            <div class="media-controls"></div>
-            <button class="photo">Photo</button>
-            <button class="draw">Draw</button>
+            {% include "./media_controls.html" %}
         </div>
 		<p class="description new" data-placeholder="Description">Description</p>
 		<b class="meta new" data-placeholder="Tags">Tags</b>
-  </script>
-
-  <script type="text/template" id="upload_template">
-    <input class="file" type='file' name='image'/>
   </script>
 
   <script type="text/javascript" data-main="javascripts/main.js" src="javascripts/lib/require.js"></script>
