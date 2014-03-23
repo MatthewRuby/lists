@@ -23,8 +23,15 @@
 		<textarea id="custom-styles">{% for entry in Entries %}{% if loop.last %}{{ decodeURIComponent(entry.styles_raw) }}{% endif %}{% endfor %}</textarea>
 	</div>
 
-	<button id="prev">prev</button>
-	<button id="next">next</button>
+	<button id="prev" class="disabled">prev</button>
+	<button id="next" class="disabled">next</button>
+
+	<nav class="nav-dots">
+		{% for entry in Entries %}
+		<a class="nav-dot {% if loop.last %}active{% endif %}" href="#" data-index="{{ loop.index-1 }}">{{ loop.index }}</a>
+		{% endfor %}
+	</nav>
+
 
 	<main id="main">
 		<div id='slider' class='swipe'>

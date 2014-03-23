@@ -3,37 +3,26 @@
 .description,
 .meta,
 .media-btn {
-    border-bottom: 0;
+    border-bottom: 1px solid transparent;
     display: block;
-    overflow: hidden;
     text-align: center;
     transition: padding 0.25s;
 }
 .headline {
     font-size: 24px;
     font-weight: 800;
-    min-height: 36px;
-}
-.headline:focus,
-.description:focus,
-.meta:focus,
-.new.headline:hover,
-.new.media:hover,
-.new.description:hover,
-.new.meta:hover {
-    padding: 3px 0;
 }
 .new.headline,
 .new.media,
 .new.description,
 .new.meta {
     border-bottom: 1px solid #999;
+    color: #ccc;
     font-size: 16px;
     font-weight: 500;
-    height: 24px;
     margin: 0 auto;
     min-height: 0;
-    padding: 24px 0 0;
+    padding: 4px 0;
     width: 300px;
 }
 #latest .new.headline,
@@ -48,7 +37,9 @@
 #latest[data-version="0"] .new.meta {
     border-bottom: 1px solid #999;
 }
-
+.new.media .media-btn {
+    color: #ccc;
+}
 
 .media-btn {
     background: transparent;
@@ -56,6 +47,7 @@
     display: none;
     font-size: 16px;
     font-weight: 500;
+    padding: 4px 0;
     text-align: center;
     margin: 0 auto;
 }
@@ -69,6 +61,7 @@
 
 .media-controls {
     display: none;
+    background: #000;
 }
 .hasMedia .media-controls,
 .media-controls.active {
@@ -81,18 +74,33 @@
 .rect,
 .undo,
 .map {
-    background: #999;
+    background-color: #fff;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
     border: 0;
     border-radius: 3px;
     color: #fff;
     display: inline-block;
-    font-size: 10px;
-    font-weight: 100;
-    margin: 0 2px;
-    padding: 4px;
-    text-align: center;
+    height: 0;
+    margin: 4px;
+    padding: 15px;
+    text-indent: -9999px;
     transition: background 0.25s;
-    width: 50px;
+    width: 0;
+}
+.photo {
+    background-image: url(../images/upload.png);
+}
+.draw {
+    background-image: url(../images/draw.png);
+    background-size: 80% auto;
+}
+.rect {
+    background-image: url(../images/rect.png);
+}
+.undo {
+    background-image: url(../images/undo.png);
 }
 .photo:hover,
 .draw:hover,
@@ -100,22 +108,15 @@
 .resize:hover,
 .undo:hover,
 .map:hover {
-    background: #666;
+    background-color: #ccc;
 }
-/*.circle,
-.rect,
-.undo {
-    display: none;
-}*/
-.hasPhoto .resize,
-.drawing .undo {
-    display: block;
-}
+
 .file {
     display: none;
 }
 
 .media-wrap {
+    line-height: 0;
     position: relative;
 }
 .media-wrap img {

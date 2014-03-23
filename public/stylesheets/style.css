@@ -430,8 +430,6 @@ body.finishMessage #modal {
   width: 100%; }
 
 #main {
-  /*    border-left: 1px solid #ccc;
-      border-right: 1px solid #ccc;*/
   display: block;
   height: 100%;
   margin: 0 auto;
@@ -440,7 +438,7 @@ body.finishMessage #modal {
   transform: translate3d(0, 0, 0);
   -ms-transform: translate3d(0, 0, 0);
   -webkit-transform: translate3d(0, 0, 0);
-  width: 80%; }
+  width: 100%; }
 
 .open #main {
   transform: translate3d(150px, 0, 0);
@@ -476,7 +474,12 @@ body.finishMessage #modal {
   text-indent: -9999px;
   top: 0;
   transition: opacity 0.25s;
-  width: 10%; }
+  width: 50px;
+  z-index: 100000; }
+
+#prev.disabled,
+#next.disabled {
+  display: none; }
 
 #prev:hover,
 #next:hover {
@@ -484,11 +487,32 @@ body.finishMessage #modal {
 
 #prev {
   background-image: url(/images/left-arr.png);
-  right: 90%; }
+  left: 0; }
 
 #next {
   background-image: url(/images/right-arr.png);
-  left: 90%; }
+  right: 0; }
+
+.nav-dots {
+  bottom: 0;
+  position: fixed;
+  width: 40%;
+  z-index: 99999; }
+
+.nav-dot {
+  background: #fff;
+  border: solid 1px #000;
+  border-radius: 50%;
+  display: inline-block;
+  height: 0;
+  margin: 5px;
+  padding: 5px;
+  text-indent: -9999px;
+  transition: background 0.25s;
+  width: 0; }
+
+.nav-dot.active {
+  background: #000; }
 
 #info {
   background: #000;
@@ -588,28 +612,26 @@ body.finishMessage #modal {
   height: 100%;
   padding: 20px 20px 50px;
   position: relative;
-  top: 0;
-  width: 800px; }
+  top: 0; }
 
 .item-wrap {
   display: block; }
 
 #new {
-  background: #fff;
-  border: solid 1px #666;
-  border-radius: 50%;
+  background-color: transparent;
+  background-image: url(../images/plus.png);
+  background-position: center center;
+  background-size: 100% 100%;
+  border: 0;
   bottom: 0;
-  color: #333;
   display: block;
-  font-size: 12px;
-  font-weight: 700;
-  height: 50px;
+  height: 40px;
   left: 50%;
   margin: 0 -25px;
   position: absolute;
-  text-align: center;
+  text-indent: -9999px;
   transition: all 0.25s;
-  width: 50px; }
+  width: 40px; }
 
 #new:hover {
   color: #666; }
@@ -627,37 +649,26 @@ body.finishMessage #modal {
 .description,
 .meta,
 .media-btn {
-  border-bottom: 0;
+  border-bottom: 1px solid transparent;
   display: block;
-  overflow: hidden;
   text-align: center;
   transition: padding 0.25s; }
 
 .headline {
   font-size: 24px;
-  font-weight: 800;
-  min-height: 36px; }
-
-.headline:focus,
-.description:focus,
-.meta:focus,
-.new.headline:hover,
-.new.media:hover,
-.new.description:hover,
-.new.meta:hover {
-  padding: 3px 0; }
+  font-weight: 800; }
 
 .new.headline,
 .new.media,
 .new.description,
 .new.meta {
   border-bottom: 1px solid #999;
+  color: #ccc;
   font-size: 16px;
   font-weight: 500;
-  height: 24px;
   margin: 0 auto;
   min-height: 0;
-  padding: 24px 0 0;
+  padding: 4px 0;
   width: 300px; }
 
 #latest .new.headline,
@@ -672,12 +683,16 @@ body.finishMessage #modal {
 #latest[data-version="0"] .new.meta {
   border-bottom: 1px solid #999; }
 
+.new.media .media-btn {
+  color: #ccc; }
+
 .media-btn {
   background: transparent;
   border: 0;
   display: none;
   font-size: 16px;
   font-weight: 500;
+  padding: 4px 0;
   text-align: center;
   margin: 0 auto; }
 
@@ -689,7 +704,8 @@ body.finishMessage #modal {
   display: none; }
 
 .media-controls {
-  display: none; }
+  display: none;
+  background: #000; }
 
 .hasMedia .media-controls,
 .media-controls.active {
@@ -702,18 +718,33 @@ body.finishMessage #modal {
 .rect,
 .undo,
 .map {
-  background: #999;
+  background-color: #fff;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
   border: 0;
   border-radius: 3px;
   color: #fff;
   display: inline-block;
-  font-size: 10px;
-  font-weight: 100;
-  margin: 0 2px;
-  padding: 4px;
-  text-align: center;
+  height: 0;
+  margin: 4px;
+  padding: 15px;
+  text-indent: -9999px;
   transition: background 0.25s;
-  width: 50px; }
+  width: 0; }
+
+.photo {
+  background-image: url(../images/upload.png); }
+
+.draw {
+  background-image: url(../images/draw.png);
+  background-size: 80% auto; }
+
+.rect {
+  background-image: url(../images/rect.png); }
+
+.undo {
+  background-image: url(../images/undo.png); }
 
 .photo:hover,
 .draw:hover,
@@ -721,21 +752,13 @@ body.finishMessage #modal {
 .resize:hover,
 .undo:hover,
 .map:hover {
-  background: #666; }
-
-/*.circle,
-.rect,
-.undo {
-    display: none;
-}*/
-.hasPhoto .resize,
-.drawing .undo {
-  display: block; }
+  background-color: #ccc; }
 
 .file {
   display: none; }
 
 .media-wrap {
+  line-height: 0;
   position: relative; }
 
 .media-wrap img {

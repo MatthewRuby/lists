@@ -29,27 +29,25 @@
     padding: 20px 20px 50px;
     position: relative;
     top: 0;
-    width: 800px;
 }
 .item-wrap {
     display: block;
 }
 #new {
-    background: #fff;
-    border: solid 1px #666;
-    border-radius: 50%;
+    background-color: transparent;
+    background-image: url(../images/plus.png);
+    background-position: center center;
+    background-size: 100% 100%;
+    border: 0;
     bottom: 0;
-    color: #333;
     display: block;
-    font-size: 12px;
-    font-weight: 700;
-    height: 50px;
+    height: 40px;
     left: 50%;
     margin: 0 -25px;
     position: absolute;
-    text-align: center;
+    text-indent: -9999px;
     transition: all 0.25s;
-    width: 50px;
+    width: 40px;
 }
 #new:hover {
     color: #666;

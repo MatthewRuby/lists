@@ -28,10 +28,18 @@ require(['lib/jquery',
         var sections = $('#latest section'),
             list = [];
 
-        _.each(sections, function(section){
-            var item = Item.setupEntry( $(section) )
-            list.push( item );
-        });
+        if(sections.length < 1) {
+            var section = document.createElement('section');
+            section.setAttribute('class', 'new');
+            $('#latest').find('.item-wrap').append(section);
+            list.push( Item.newBlankEntry( $(section) ) );
+        } else {
+            _.each(sections, function(section){
+                var item = Item.setupEntry( $(section) )
+                list.push( item );
+            });
+        }
+
 
         $('#new').on('click', function(){
             var section = document.createElement('section');

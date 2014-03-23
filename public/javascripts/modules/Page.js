@@ -32,6 +32,9 @@ define([
                     }
                 });
                 this.winControls(carousel);
+                if($('.version').length < 1){
+                    $('#prev').removeClass('disabled');
+                }
             },
 
             winControls: function(c) {
@@ -40,6 +43,13 @@ define([
                 });
                 $('#next').on('click', function() {
                     c.next();
+                });
+                $('.nav-dots a').on('click', function(e) {
+                    e.preventDefault();
+                    var index = $(e.target).attr('data-index');
+                    $('.nav-dots a').removeClass('active');
+                    $(this).addClass('active');
+                    c.slide(index, 250);
                 });
             }
 

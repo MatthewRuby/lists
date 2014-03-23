@@ -40,8 +40,6 @@ body.finishMessage #modal {
 }
 
 #main {
-/*    border-left: 1px solid #ccc;
-    border-right: 1px solid #ccc;*/
     display: block;
     height: 100%;
     margin: 0 auto;
@@ -50,7 +48,7 @@ body.finishMessage #modal {
     transform: translate3d(0, 0, 0);
     -ms-transform: translate3d(0, 0, 0);
     -webkit-transform: translate3d(0, 0, 0);
-    width: 80%;
+    width: 100%;
 }
 .open #main {
     transform: translate3d(150px, 0, 0);
@@ -86,7 +84,12 @@ body.finishMessage #modal {
     text-indent :-9999px;
     top: 0;
     transition: opacity 0.25s;
-    width: 10%;
+    width: 50px;
+    z-index: 100000;
+}
+#prev.disabled,
+#next.disabled {
+    display: none;
 }
 #prev:hover,
 #next:hover {
@@ -94,9 +97,30 @@ body.finishMessage #modal {
 }
 #prev {
     background-image: url(/images/left-arr.png);
-    right: 90%;
+    left: 0;
 }
 #next {
     background-image: url(/images/right-arr.png);
-    left: 90%;
+    right: 0;
+}
+.nav-dots {
+    bottom: 0;
+    position: fixed;
+    width: 40%;
+    z-index: 99999;
+}
+.nav-dot {
+    background: #fff;
+    border: solid 1px #000;
+    border-radius: 50%;
+    display: inline-block;
+    height: 0;
+    margin: 5px;
+    padding: 5px;
+    text-indent: -9999px;
+    transition: background 0.25s;
+    width: 0;
+}
+.nav-dot.active {
+    background: #000;
 }
