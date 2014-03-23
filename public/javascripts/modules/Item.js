@@ -93,20 +93,41 @@ define('modules/Item', ['lib/jquery', 'lib/backbone-min', 'modules/Drawing'], fu
         },
 
         enableDraw : function(el, model) {
-            var paper = el.find('.paper');
-            if(!paper.length){
+            var paper = el.find('.paper')[0],
+                circle = el.find('.circle')[0],
+                square = el.find('.rect')[0],
+                undo = el.find('.undo')[0],
+                drawings = [],
+                activeDrawing;
+
+            if(!paper){
                 el.find('.media-wrap').append('<svg class="paper" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink"http://www.w3.org/1999/xlink" attributeType="XML"></svg>');
-                paper = el.find('.paper');
+                paper = el.find('.paper')[0];
             }
+
             el.find('.media-wrap').addClass('hasDrawing');
-            new Drawing(paper);
-            paper.on('mouseup', function(){
-                model.set({ media: {
-                    draw: paper.html(),
-                    photo : el.find('.media-wrap img').attr('src'),
-                }});
-                new Drawing(paper);
-            });
+
+            drawings.push( new Drawing(paper) );
+            paper.addEventListener('mouseup', function(e){
+                activeDrawing = drawings[drawings.length-1];
+                drawings.push( new Drawing(paper) );
+            }, false);
+
+            circle.addEventListener('click', function(){
+                activeDrawing.makeCircle();
+            }, false);
+            square.addEventListener('click', function(){
+                activeDrawing.makeRect();
+            }, false);
+            undo.addEventListener('click', function(){
+                activeDrawing.undoDrawing();
+                activeDrawing = drawings[drawings.length-1];
+            }, false);
+
+            // model.set({ media: {
+            //     draw: paper.html(),
+            //     photo : el.find('.media-wrap img').attr('src'),
+            // }});
 
         },
 

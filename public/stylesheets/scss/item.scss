@@ -77,7 +77,8 @@
 .photo,
 .draw,
 .clear,
-.resize,
+.circle,
+.rect,
 .undo,
 .map {
     background: #999;
@@ -101,10 +102,11 @@
 .map:hover {
     background: #666;
 }
-.resize,
+/*.circle,
+.rect,
 .undo {
     display: none;
-}
+}*/
 .hasPhoto .resize,
 .drawing .undo {
     display: block;
@@ -117,7 +119,9 @@
     position: relative;
 }
 .media-wrap img {
+    height: auto;
     position: relative;
+    width: 100%;
     z-index: 1;
 }
 .media-wrap svg {

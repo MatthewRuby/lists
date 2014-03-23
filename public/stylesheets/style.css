@@ -698,7 +698,8 @@ body.finishMessage #modal {
 .photo,
 .draw,
 .clear,
-.resize,
+.circle,
+.rect,
 .undo,
 .map {
   background: #999;
@@ -722,10 +723,11 @@ body.finishMessage #modal {
 .map:hover {
   background: #666; }
 
-.resize,
+/*.circle,
+.rect,
 .undo {
-  display: none; }
-
+    display: none;
+}*/
 .hasPhoto .resize,
 .drawing .undo {
   display: block; }
@@ -737,7 +739,9 @@ body.finishMessage #modal {
   position: relative; }
 
 .media-wrap img {
+  height: auto;
   position: relative;
+  width: 100%;
   z-index: 1; }
 
 .media-wrap svg {
